@@ -35,7 +35,8 @@ const services = [
       "Stronger social proof ecosystem",
       "Community-driven reputation"
     ],
-    trustedBy: ["IWBI", "CRI", "ITSco"]
+    trustedBy: ["IWBI", "CRI", "ITSco"],
+    url: "https://catalyst.certainly.coop/"
   }
 ];
 
