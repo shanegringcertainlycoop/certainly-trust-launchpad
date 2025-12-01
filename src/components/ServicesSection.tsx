@@ -183,12 +183,6 @@ export const ServicesSection = () => {
             </Card>
           ))}
         </div>
-
-        <div className="text-center mt-12">
-          <Button variant="cta" size="lg" onClick={scrollToContact}>
-            Explore Our Services
-          </Button>
-        </div>
       </div>
     </section>
   );
