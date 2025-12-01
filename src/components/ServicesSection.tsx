@@ -23,7 +23,8 @@ const services = [
       "Increased inbound opportunities",
       "Elevated perceived value"
     ],
-    trustedBy: ["IWBI", "Longevity", "CodeGreen"]
+    trustedBy: ["IWBI", "Longevity", "CodeGreen"],
+    url: "https://30dayweb.certainly.coop"
   },
   {
     title: "Trust-Multiplying Content™",
