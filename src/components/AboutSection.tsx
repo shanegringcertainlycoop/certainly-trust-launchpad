@@ -40,7 +40,7 @@ export const AboutSection = () => {
               </p>
               <p>
                 <a 
-                  href="https://www.ica.coop/en/cooperatives/cooperative-identity" 
+                  href="https://ica.coop/en/cooperatives/cooperative-identity" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-accent-burgundy hover:underline font-medium"
