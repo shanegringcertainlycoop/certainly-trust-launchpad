@@ -11,7 +11,11 @@ const services = [
       "IP protection and credibility",
       "Certified community of advocates"
     ],
-    trustedBy: ["DRVN", "IWBI", "USGBC"],
+    trustedBy: [
+      { name: "DRVN", logo: "/logos/drvn.png" },
+      { name: "IWBI", logo: "/logos/iwbi.png" },
+      { name: "USGBC", logo: "/logos/usgbc.png" }
+    ],
     url: "https://cyoc.certainly.coop"
   },
   {
@@ -23,7 +27,11 @@ const services = [
       "Increased inbound opportunities",
       "Elevated perceived value"
     ],
-    trustedBy: ["IWBI", "Longevity", "CodeGreen"],
+    trustedBy: [
+      { name: "IWBI", logo: "/logos/iwbi.png" },
+      { name: "Longevity", logo: "/logos/longevity.png" },
+      { name: "CodeGreen", logo: "/logos/codegreen.png" }
+    ],
     url: "https://30dayweb.certainly.coop"
   },
   {
@@ -35,7 +43,11 @@ const services = [
       "Stronger social proof ecosystem",
       "Community-driven reputation"
     ],
-    trustedBy: ["IWBI", "CRI", "ITSco"],
+    trustedBy: [
+      { name: "IWBI", logo: "/logos/iwbi.png" },
+      { name: "CRI", logo: "/logos/cri.png" },
+      { name: "ITSco", logo: "/logos/itsco.png" }
+    ],
     url: "https://catalyst.certainly.coop/"
   }
 ];
@@ -98,10 +110,18 @@ export const ServicesSection = () => {
                     </div>
 
                     <div className="pt-4 border-t">
-                      <span className="text-xs text-foreground/60 font-medium">Trusted by: </span>
-                      <span className="text-xs text-forest-green font-medium">
-                        {service.trustedBy.join(", ")}
-                      </span>
+                      <p className="text-xs text-foreground/60 font-medium mb-2">Trusted by:</p>
+                      <div className="flex items-center gap-3 flex-wrap">
+                        {service.trustedBy.map((client, idx) => (
+                          <div key={idx} className="h-8 flex items-center">
+                            <img 
+                              src={client.logo} 
+                              alt={client.name}
+                              className="h-full w-auto object-contain opacity-60 hover:opacity-100 transition-opacity"
+                            />
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </a>
                 ) : (
@@ -131,10 +151,18 @@ export const ServicesSection = () => {
                     </div>
 
                     <div className="pt-4 border-t">
-                      <span className="text-xs text-foreground/60 font-medium">Trusted by: </span>
-                      <span className="text-xs text-forest-green font-medium">
-                        {service.trustedBy.join(", ")}
-                      </span>
+                      <p className="text-xs text-foreground/60 font-medium mb-2">Trusted by:</p>
+                      <div className="flex items-center gap-3 flex-wrap">
+                        {service.trustedBy.map((client, idx) => (
+                          <div key={idx} className="h-8 flex items-center">
+                            <img 
+                              src={client.logo} 
+                              alt={client.name}
+                              className="h-full w-auto object-contain opacity-60 hover:opacity-100 transition-opacity"
+                            />
+                          </div>
+                        ))}
+                      </div>
                     </div>
 
                     <Button 
