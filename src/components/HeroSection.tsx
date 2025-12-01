@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import certainlyLogo from "@/assets/certainly-logo.png";
 
 export const HeroSection = () => {
   const scrollToServices = () => {
@@ -10,6 +11,14 @@ export const HeroSection = () => {
     <section className="min-h-screen bg-cream flex items-center py-20 px-6 md:px-12">
       <div className="max-w-4xl mx-auto w-full text-center">
         <div className="space-y-6">
+          <div className="mb-12">
+            <img 
+              src={certainlyLogo} 
+              alt="Certainly" 
+              className="h-12 md:h-16 w-auto mx-auto"
+            />
+          </div>
+          
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-near-black leading-tight text-balance">
             We help brands earn trust in an uncertain world.
           </h1>
