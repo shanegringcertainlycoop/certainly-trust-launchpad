@@ -43,6 +43,10 @@ export const ServicesSection = () => {
     element?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const handleServiceClick = (serviceName: string) => {
+    scrollToContact();
+  };
+
   return (
     <section id="services" className="py-24 bg-light-gray px-6 md:px-12">
       <div className="max-w-7xl mx-auto">
@@ -89,6 +93,14 @@ export const ServicesSection = () => {
                     {service.trustedBy.join(", ")}
                   </span>
                 </div>
+
+                <Button 
+                  variant="cta" 
+                  className="w-full"
+                  onClick={() => handleServiceClick(service.title)}
+                >
+                  Learn More
+                </Button>
               </CardContent>
             </Card>
           ))}
