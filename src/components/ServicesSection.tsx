@@ -11,7 +11,8 @@ const services = [
       "IP protection and credibility",
       "Certified community of advocates"
     ],
-    trustedBy: ["DRVN", "IWBI", "USGBC"]
+    trustedBy: ["DRVN", "IWBI", "USGBC"],
+    url: "https://cyoc.certainly.coop"
   },
   {
     title: "Digital Brand Build™",
@@ -63,44 +64,91 @@ export const ServicesSection = () => {
           {services.map((service, index) => (
             <Card key={index} className="border-none shadow-lg hover:shadow-xl transition-shadow duration-300">
               <CardContent className="p-6 space-y-4">
-                <h3 className="text-2xl font-serif font-bold text-near-black">
-                  {service.title}
-                </h3>
-                
-                <p className="text-base text-foreground/80 font-medium">
-                  {service.summary}
-                </p>
-                
-                <p className="text-sm text-foreground/70 leading-relaxed">
-                  {service.description}
-                </p>
+                {service.url ? (
+                  <a 
+                    href={service.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="block space-y-4 cursor-pointer"
+                  >
+                    <h3 className="text-2xl font-serif font-bold text-near-black">
+                      {service.title}
+                    </h3>
+                    
+                    <p className="text-base text-foreground/80 font-medium">
+                      {service.summary}
+                    </p>
+                    
+                    <p className="text-sm text-foreground/70 leading-relaxed">
+                      {service.description}
+                    </p>
 
-                <div>
-                  <h4 className="font-semibold text-near-black mb-2 text-sm">Outcomes:</h4>
-                  <ul className="space-y-1">
-                    {service.outcomes.map((item, i) => (
-                      <li key={i} className="flex items-start text-sm">
-                        <span className="text-forest-green mr-2">•</span>
-                        <span className="text-foreground/70">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                    <div>
+                      <h4 className="font-semibold text-near-black mb-2 text-sm">Outcomes:</h4>
+                      <ul className="space-y-1">
+                        {service.outcomes.map((item, i) => (
+                          <li key={i} className="flex items-start text-sm">
+                            <span className="text-forest-green mr-2">•</span>
+                            <span className="text-foreground/70">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-                <div className="pt-4 border-t">
-                  <span className="text-xs text-foreground/60 font-medium">Trusted by: </span>
-                  <span className="text-xs text-forest-green font-medium">
-                    {service.trustedBy.join(", ")}
-                  </span>
-                </div>
+                    <div className="pt-4 border-t">
+                      <span className="text-xs text-foreground/60 font-medium">Trusted by: </span>
+                      <span className="text-xs text-forest-green font-medium">
+                        {service.trustedBy.join(", ")}
+                      </span>
+                    </div>
+                  </a>
+                ) : (
+                  <>
+                    <h3 className="text-2xl font-serif font-bold text-near-black">
+                      {service.title}
+                    </h3>
+                    
+                    <p className="text-base text-foreground/80 font-medium">
+                      {service.summary}
+                    </p>
+                    
+                    <p className="text-sm text-foreground/70 leading-relaxed">
+                      {service.description}
+                    </p>
 
-                <Button 
-                  variant="cta" 
-                  className="w-full"
-                  onClick={() => handleServiceClick(service.title)}
-                >
-                  Learn More
-                </Button>
+                    <div>
+                      <h4 className="font-semibold text-near-black mb-2 text-sm">Outcomes:</h4>
+                      <ul className="space-y-1">
+                        {service.outcomes.map((item, i) => (
+                          <li key={i} className="flex items-start text-sm">
+                            <span className="text-forest-green mr-2">•</span>
+                            <span className="text-foreground/70">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="pt-4 border-t">
+                      <span className="text-xs text-foreground/60 font-medium">Trusted by: </span>
+                      <span className="text-xs text-forest-green font-medium">
+                        {service.trustedBy.join(", ")}
+                      </span>
+                    </div>
+
+                    <Button 
+                      variant="cta" 
+                      className="w-full"
+                      onClick={() => handleServiceClick(service.title)}
+                    >
+                      Learn More
+                    </Button>
+                  </>
+                )}
+                {service.url && (
+                  <div className="pt-2 text-sm text-primary font-medium">
+                    Visit Site →
+                  </div>
+                )}
               </CardContent>
             </Card>
           ))}
