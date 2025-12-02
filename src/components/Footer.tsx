@@ -39,7 +39,7 @@ export const Footer = () => {
 
           {/* Social Links */}
           <div>
-            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground/80 transition-colors" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/company/certainlycoop" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground/80 transition-colors" aria-label="LinkedIn">
               LinkedIn
             </a>
           </div>
