@@ -144,6 +144,18 @@ export const ServicesSection = () => {
               </CardContent>
             </Card>)}
         </div>
+
+        <div className="text-center mt-12">
+          <p className="text-lg text-foreground/70">
+            We also do custom projects, consulting, and 1:1 advising for organizations.{" "}
+            <button 
+              onClick={handleServiceClick}
+              className="text-primary font-medium hover:underline"
+            >
+              Contact us
+            </button>.
+          </p>
+        </div>
       </div>
     </section>
     </>;
