@@ -9,9 +9,10 @@ import {
 import { Button } from "@/components/ui/button";
 import avatarAndrew from "@/assets/avatar-andrew.png";
 import avatarJim from "@/assets/avatar-jim.png";
+import avatarPrateek from "@/assets/avatar-prateek.png";
 import slideCodegreen from "@/assets/slide-codegreen.png";
 import slideOnePercent from "@/assets/slide-onepercentplanet.png";
-import caseIwbi from "@/assets/case-iwbi.jpg";
+import slideIwbi from "@/assets/slide-iwbi.png";
 
 const testimonials = [
   {
@@ -33,13 +34,13 @@ const testimonials = [
     image: slideOnePercent,
   },
   {
-    headline: "Built trust with",
-    highlight: "50+ certifications",
-    quote: '"The credential program Certainly developed has become the gold standard in our industry. It\'s helped us establish authority and build lasting trust with our stakeholders."',
-    name: "Michael Torres",
-    title: "VP of Programs, IWBI",
-    avatar: "/logos/iwbi.png",
-    image: caseIwbi,
+    headline: "A campaign funnel that converted",
+    highlight: "105%",
+    quote: '"The experts at Certainly have been instrumental to the success of the WELL program and the growth of the IWBI community. They\'re the "secret sauce" behind many of our technical interventions."',
+    name: "Prateek Khanna",
+    title: "COO/CTO, International WELL Building Institute",
+    avatar: avatarPrateek,
+    image: slideIwbi,
   },
 ];
 
