@@ -76,7 +76,7 @@ export const ServicesSection = () => {
           {services.map((service, index) => <Card key={index} className="border-none shadow-lg hover:shadow-xl transition-shadow duration-300">
               <CardContent className="p-6 space-y-4">
                 {service.url ? <a href={service.url} target="_blank" rel="noopener noreferrer" className="block space-y-4 cursor-pointer">
-                    <p className="font-serif text-near-black leading-relaxed text-4xl">
+                    <p className="font-serif text-near-black leading-tight text-4xl">
                       {service.summary}
                     </p>
                     
@@ -107,7 +107,7 @@ export const ServicesSection = () => {
                       </div>
                     </div>
                   </a> : <>
-                    <p className="text-xl font-serif text-near-black leading-relaxed">
+                    <p className="text-xl font-serif text-near-black leading-tight">
                       {service.summary}
                     </p>
                     
