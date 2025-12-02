@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ContactModal } from "@/components/ContactSection";
-import certainlyLogo from "@/assets/certainly-logo.png";
+import certainlyLogo from "@/assets/certainly-logo-new.png";
 
 export const HeroSection = () => {
   const [isContactOpen, setIsContactOpen] = useState(false);
