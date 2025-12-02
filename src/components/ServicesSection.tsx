@@ -44,8 +44,8 @@ const services = [{
     name: "CRI",
     logo: "/logos/cri.png"
   }, {
-    name: "ITSco",
-    logo: "/logos/itsco.png"
+    name: "CodeGreen",
+    logo: "/logos/codegreen.png"
   }],
   url: "https://catalyst.certainly.coop/"
 }];
