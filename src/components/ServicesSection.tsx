@@ -85,13 +85,13 @@ export const ServicesSection = () => {
                     rel="noopener noreferrer"
                     className="block space-y-4 cursor-pointer"
                   >
-                    <h3 className="text-2xl font-serif font-bold text-near-black">
-                      {service.title}
-                    </h3>
-                    
-                    <p className="text-base text-foreground/80 font-medium">
+                    <p className="text-lg font-serif text-near-black leading-relaxed">
                       {service.summary}
                     </p>
+                    
+                    <h3 className="text-base font-sans font-semibold text-near-black">
+                      {service.title}
+                    </h3>
                     
                     <p className="text-sm text-foreground/70 leading-relaxed">
                       {service.description}
@@ -126,13 +126,13 @@ export const ServicesSection = () => {
                   </a>
                 ) : (
                   <>
-                    <h3 className="text-2xl font-serif font-bold text-near-black">
-                      {service.title}
-                    </h3>
-                    
-                    <p className="text-base text-foreground/80 font-medium">
+                    <p className="text-lg font-serif text-near-black leading-relaxed">
                       {service.summary}
                     </p>
+                    
+                    <h3 className="text-base font-sans font-semibold text-near-black">
+                      {service.title}
+                    </h3>
                     
                     <p className="text-sm text-foreground/70 leading-relaxed">
                       {service.description}
