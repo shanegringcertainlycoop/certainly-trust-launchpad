@@ -43,6 +43,9 @@ const services = [{
   }, {
     name: "ECA",
     logo: "/logos/eca.png"
+  }, {
+    name: "ITSCO",
+    logo: "/logos/itsco.png"
   }],
   url: "https://catalyst.certainly.coop/"
 }];
