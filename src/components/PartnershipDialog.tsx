@@ -33,8 +33,11 @@ export const PartnershipDialog = ({ open, onOpenChange, serviceName }: Partnersh
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Partnership form submitted", formData);
     
     const validation = partnershipSchema.safeParse(formData);
+    console.log("Validation result:", validation);
+    
     if (!validation.success) {
       toast({
         title: "Validation Error",
@@ -45,8 +48,10 @@ export const PartnershipDialog = ({ open, onOpenChange, serviceName }: Partnersh
     }
 
     setIsSubmitting(true);
+    console.log("Starting submission...");
 
     try {
+      console.log("Inserting into database...");
       const { error } = await supabase.from("partnership_inquiries").insert({
         name: formData.name,
         email: formData.email,
