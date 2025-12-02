@@ -54,18 +54,12 @@ const services = [{
 export const ServicesSection = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<string | undefined>();
-  
   const handleExplorePartnership = (serviceName?: string) => {
     setSelectedService(serviceName);
     setIsDialogOpen(true);
   };
-  
   return <>
-      <PartnershipDialog 
-        open={isDialogOpen} 
-        onOpenChange={setIsDialogOpen}
-        serviceName={selectedService}
-      />
+      <PartnershipDialog open={isDialogOpen} onOpenChange={setIsDialogOpen} serviceName={selectedService} />
       
       <section id="services" className="py-24 bg-light-gray px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
@@ -102,18 +96,14 @@ export const ServicesSection = () => {
 
                     <div className="pt-4 border-t">
                       <p className="text-xs text-foreground/60 font-medium mb-2">Trusted by:</p>
-                      <div className="flex items-center gap-3 flex-wrap">
+                      <div className="flex items-center gap-3 flex-wrap my-[14px]">
                         {service.trustedBy.map((client, idx) => <div key={idx} className="h-8 flex items-center">
                             <img src={client.logo} alt={client.name} className="h-full w-auto object-contain opacity-60 transition-opacity" />
                           </div>)}
                       </div>
                     </div>
 
-                    <Button 
-                      variant="cta" 
-                      className="w-full" 
-                      onClick={() => window.open(service.url, '_blank', 'noopener,noreferrer')}
-                    >
+                    <Button variant="cta" className="w-full" onClick={() => window.open(service.url, '_blank', 'noopener,noreferrer')}>
                       Visit Site →
                     </Button>
                   </> : <>
@@ -148,11 +138,7 @@ export const ServicesSection = () => {
                       </div>
                     </div>
 
-                    <Button 
-                      variant="cta" 
-                      className="w-full" 
-                      onClick={() => handleExplorePartnership(service.title)}
-                    >
+                    <Button variant="cta" className="w-full" onClick={() => handleExplorePartnership(service.title)}>
                       Explore a Partnership
                     </Button>
                   </>}
@@ -163,10 +149,7 @@ export const ServicesSection = () => {
         <div className="text-center mt-12">
           <p className="text-lg text-foreground/70">
             We also do custom projects, consulting, and 1:1 advising for organizations.{" "}
-            <button 
-              onClick={() => handleExplorePartnership()}
-              className="text-primary font-medium hover:underline"
-            >
+            <button onClick={() => handleExplorePartnership()} className="text-primary font-medium hover:underline">
               Contact us
             </button>.
           </p>
