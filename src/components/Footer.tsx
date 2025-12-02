@@ -37,22 +37,6 @@ export const Footer = () => {
             <h3 className="text-2xl font-serif font-bold">Certainly Cooperative</h3>
           </div>
 
-          {/* Navigation */}
-          <nav className="flex flex-wrap justify-center gap-6">
-            <a href="#" className="hover:text-primary-foreground/80 transition-colors">
-              Home
-            </a>
-            <a href="#services" className="hover:text-primary-foreground/80 transition-colors">
-              Services
-            </a>
-            <a href="#stories" className="hover:text-primary-foreground/80 transition-colors">
-              Stories
-            </a>
-            <a href="#contact" className="hover:text-primary-foreground/80 transition-colors">
-              Contact
-            </a>
-          </nav>
-
           {/* Social Links */}
           <div className="flex gap-4">
             <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground/80 transition-colors" aria-label="LinkedIn">
