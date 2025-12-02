@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselApi,
 } from "@/components/ui/carousel";
+import { Button } from "@/components/ui/button";
 import caseCodegreen from "@/assets/case-codegreen.jpg";
 import caseDrvn from "@/assets/case-drvn.jpg";
 import caseIwbi from "@/assets/case-iwbi.jpg";
@@ -89,21 +91,6 @@ export const TestimonialsSlider = () => {
                   
                   {/* Right Image */}
                   <div className="relative">
-                    <div className="absolute top-4 right-4 flex gap-2 z-10">
-                      {testimonials.map((_, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => api?.scrollTo(idx)}
-                          className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
-                            current === idx
-                              ? "bg-forest-green text-white"
-                              : "bg-white/80 text-near-black hover:bg-white"
-                          }`}
-                        >
-                          {idx === 0 ? "D" : idx === 1 ? "I" : "C"}
-                        </button>
-                      ))}
-                    </div>
                     <div className="rounded-lg overflow-hidden shadow-2xl">
                       <img 
                         src={item.image} 
@@ -117,6 +104,47 @@ export const TestimonialsSlider = () => {
             ))}
           </CarouselContent>
         </Carousel>
+        
+        {/* Navigation Controls */}
+        <div className="flex items-center justify-between mt-8">
+          {/* Status Dots */}
+          <div className="flex gap-2">
+            {testimonials.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => api?.scrollTo(idx)}
+                className={`w-3 h-3 rounded-full transition-all ${
+                  current === idx
+                    ? "bg-forest-green w-8"
+                    : "bg-forest-green/30 hover:bg-forest-green/50"
+                }`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
+          </div>
+          
+          {/* Arrows */}
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => api?.scrollPrev()}
+              className="rounded-full border-forest-green/30 hover:bg-forest-green hover:text-white hover:border-forest-green"
+              aria-label="Previous slide"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => api?.scrollNext()}
+              className="rounded-full border-forest-green/30 hover:bg-forest-green hover:text-white hover:border-forest-green"
+              aria-label="Next slide"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </Button>
+          </div>
+        </div>
       </div>
     </section>
   );
