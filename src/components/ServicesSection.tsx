@@ -69,7 +69,7 @@ export const ServicesSection = () => {
         <div className="grid md:grid-cols-3 gap-8">
           {services.map((service, index) => <Card key={index} className="border-none shadow-lg hover:shadow-xl transition-shadow duration-300">
               <CardContent className="p-6 space-y-4">
-                {service.url ? <a href={service.url} target="_blank" rel="noopener noreferrer" className="block space-y-4 cursor-pointer">
+              {service.url ? <>
                     <p className="font-serif text-near-black leading-tight text-4xl">
                       {service.summary}
                     </p>
@@ -100,7 +100,15 @@ export const ServicesSection = () => {
                           </div>)}
                       </div>
                     </div>
-                  </a> : <>
+
+                    <Button 
+                      variant="cta" 
+                      className="w-full" 
+                      onClick={() => window.open(service.url, '_blank', 'noopener,noreferrer')}
+                    >
+                      Visit Site →
+                    </Button>
+                  </> : <>
                     <p className="text-xl font-serif text-near-black leading-tight">
                       {service.summary}
                     </p>
@@ -136,9 +144,6 @@ export const ServicesSection = () => {
                       Learn More
                     </Button>
                   </>}
-                {service.url && <div className="pt-2 text-sm text-primary font-medium">
-                    Visit Site →
-                  </div>}
               </CardContent>
             </Card>)}
         </div>
