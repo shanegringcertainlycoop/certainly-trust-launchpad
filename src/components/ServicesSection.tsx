@@ -24,6 +24,9 @@ const services = [{
   }, {
     name: "Pinchin",
     logo: "/logos/pinchin.png"
+  }, {
+    name: "CodeGreen",
+    logo: "/logos/codegreen.png"
   }],
   url: "https://30dayweb.certainly.coop"
 }, {
@@ -34,9 +37,6 @@ const services = [{
   trustedBy: [{
     name: "IWBI",
     logo: "/logos/iwbi.png"
-  }, {
-    name: "CodeGreen",
-    logo: "/logos/codegreen.png"
   }, {
     name: "ECA",
     logo: "/logos/eca.png"
