@@ -38,12 +38,9 @@ export const Footer = () => {
           </div>
 
           {/* Social Links */}
-          <div className="flex gap-4">
+          <div>
             <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground/80 transition-colors" aria-label="LinkedIn">
               LinkedIn
-            </a>
-            <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground/80 transition-colors" aria-label="YouTube">
-              YouTube
             </a>
           </div>
         </div>
