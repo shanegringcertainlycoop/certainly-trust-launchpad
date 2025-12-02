@@ -41,6 +41,14 @@ export const Footer = () => {
           throw error;
         }
       } else {
+        // Send notification email (don't wait for it)
+        supabase.functions.invoke("send-notification", {
+          body: {
+            type: "newsletter_subscription",
+            data: { email: validation.data },
+          },
+        }).catch(err => console.error("Failed to send notification:", err));
+
         toast({
           title: "Thanks for subscribing!",
           description: "You'll receive our next edition of Seeking Certainty soon."
