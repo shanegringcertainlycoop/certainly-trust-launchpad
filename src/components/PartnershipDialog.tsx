@@ -57,6 +57,20 @@ export const PartnershipDialog = ({ open, onOpenChange, serviceName }: Partnersh
 
       if (error) throw error;
 
+      // Send notification email (don't wait for it)
+      supabase.functions.invoke("send-notification", {
+        body: {
+          type: "partnership_inquiry",
+          data: {
+            name: formData.name,
+            email: formData.email,
+            company: formData.company,
+            message: formData.message,
+            service: serviceName,
+          },
+        },
+      }).catch(err => console.error("Failed to send notification:", err));
+
       toast({
         title: "Thank you!",
         description: "We've received your inquiry and will be in touch soon.",
