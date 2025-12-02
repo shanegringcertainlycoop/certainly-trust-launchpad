@@ -1,13 +1,14 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { ContactModal } from "@/components/ContactSection";
 import certainlyLogo from "@/assets/certainly-logo.png";
 
 export const HeroSection = () => {
-  const scrollToServices = () => {
-    const element = document.getElementById('services');
-    element?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
   return (
+    <>
+      <ContactModal open={isContactOpen} onOpenChange={setIsContactOpen} />
     <section className="min-h-screen bg-cream flex items-center py-20 px-6 md:px-12">
       <div className="max-w-4xl mx-auto w-full text-center">
         <div className="space-y-6">
@@ -36,7 +37,7 @@ export const HeroSection = () => {
             <Button 
               variant="cta" 
               size="lg"
-              onClick={scrollToServices}
+              onClick={() => setIsContactOpen(true)}
               className="text-base"
             >
               Explore a Partnership
@@ -45,5 +46,6 @@ export const HeroSection = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
