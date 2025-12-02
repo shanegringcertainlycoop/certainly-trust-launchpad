@@ -4,6 +4,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   Form,
   FormControl,
   FormField,
@@ -23,7 +30,12 @@ const contactSchema = z.object({
 
 type ContactFormValues = z.infer<typeof contactSchema>;
 
-export const ContactSection = () => {
+interface ContactModalProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+export const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
@@ -50,22 +62,23 @@ export const ContactSection = () => {
 
     form.reset();
     setIsSubmitting(false);
+    onOpenChange(false);
   };
 
   return (
-    <section id="contact" className="py-24 bg-cream px-6 md:px-12">
-      <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-near-black mb-4">
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-[500px]">
+        <DialogHeader>
+          <DialogTitle className="text-2xl font-serif font-bold text-near-black">
             Get in Touch
-          </h2>
-          <p className="text-xl text-foreground/70">
+          </DialogTitle>
+          <DialogDescription>
             Let's discuss how we can help you build credibility that compounds.
-          </p>
-        </div>
+          </DialogDescription>
+        </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
               name="name"
@@ -131,7 +144,7 @@ export const ContactSection = () => {
             </Button>
           </form>
         </Form>
-      </div>
-    </section>
+      </DialogContent>
+    </Dialog>
   );
 };
