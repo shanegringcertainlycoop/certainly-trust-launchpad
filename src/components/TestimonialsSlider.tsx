@@ -100,7 +100,7 @@ export const TestimonialsSlider = () => {
                   
                   {/* Right Image */}
                   <div className="relative">
-                    <div className="rounded-lg overflow-hidden shadow-2xl">
+                    <div className="rounded-lg overflow-hidden">
                       <img 
                         src={item.image} 
                         alt={`${item.name} case study`}
