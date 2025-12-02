@@ -17,7 +17,7 @@ const services = [{
     name: "DRVN",
     logo: "/logos/drvn.png"
   }],
-  url: "https://cyoc.certainly.coop"
+  url: "https://offer.certainly.coop/"
 }, {
   title: "Digital Brand Build™",
   summary: "Your message deserves a platform that inspires confidence.",
