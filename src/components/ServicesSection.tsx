@@ -34,7 +34,7 @@ const services = [{
   url: "https://30dayweb.certainly.coop"
 }, {
   title: "Trust-Multiplying Content™",
-  summary: "Turn proof into persuasion.",
+  summary: "Turn proof into persuasion with consistent content.",
   description: "We turn your certification, case studies, and outcomes into powerful content that compounds trust over time.",
   outcomes: ["Expanded audience reach", "Stronger social proof ecosystem", "Community-driven reputation"],
   trustedBy: [{
