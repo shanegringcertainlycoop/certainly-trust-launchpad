@@ -6,9 +6,6 @@ const services = [{
   description: "We help you codify your expertise into a structured, professional credential — complete with governance, assessment, and renewal cycles.",
   outcomes: ["Recurring revenue stream", "IP protection and credibility", "Certified community of advocates"],
   trustedBy: [{
-    name: "DRVN",
-    logo: "/logos/drvn.png"
-  }, {
     name: "IWBI",
     logo: "/logos/iwbi.png"
   }, {
@@ -25,9 +22,6 @@ const services = [{
     name: "IWBI",
     logo: "/logos/iwbi.png"
   }, {
-    name: "Longevity",
-    logo: "/logos/longevity.png"
-  }, {
     name: "Pinchin",
     logo: "/logos/pinchin.png"
   }],
@@ -40,9 +34,6 @@ const services = [{
   trustedBy: [{
     name: "IWBI",
     logo: "/logos/iwbi.png"
-  }, {
-    name: "CRI",
-    logo: "/logos/cri.png"
   }, {
     name: "CodeGreen",
     logo: "/logos/codegreen.png"
