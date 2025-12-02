@@ -39,12 +39,12 @@ export const AboutSection = () => {
                 they help others communicate.
               </p>
               <p>
-                <a 
-                  href="https://ica.coop/en/cooperatives/cooperative-identity" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-accent-burgundy hover:underline font-medium"
-                >
+              <a 
+                href="https://ica.coop/en/cooperatives/cooperative-identity" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-cream hover:text-cream/80 hover:underline font-medium transition-colors"
+              >
                   Learn about the seven cooperative principles →
                 </a>
               </p>
