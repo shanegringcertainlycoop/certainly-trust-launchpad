@@ -2,32 +2,61 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
+
+const emailSchema = z.string().trim().email("Invalid email address").max(255);
 export const Footer = () => {
   const [email, setEmail] = useState("");
-  const {
-    toast
-  } = useToast();
-  const handleSubscribe = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+  
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) {
+    
+    const validation = emailSchema.safeParse(email);
+    if (!validation.success) {
       toast({
-        title: "Please enter your email address",
+        title: "Invalid email",
+        description: validation.error.errors[0].message,
         variant: "destructive"
       });
       return;
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase
+        .from("newsletter_subscriptions")
+        .insert({ email: validation.data });
+
+      if (error) {
+        if (error.code === '23505') {
+          toast({
+            title: "Already subscribed",
+            description: "This email is already on our list!",
+          });
+        } else {
+          throw error;
+        }
+      } else {
+        toast({
+          title: "Thanks for subscribing!",
+          description: "You'll receive our next edition of Seeking Certainty soon."
+        });
+        setEmail("");
+      }
+    } catch (error) {
+      console.error("Error subscribing:", error);
       toast({
-        title: "Please enter a valid email address",
+        title: "Error",
+        description: "Something went wrong. Please try again.",
         variant: "destructive"
       });
-      return;
+    } finally {
+      setIsSubmitting(false);
     }
-    toast({
-      title: "Thanks for subscribing!",
-      description: "You'll receive our next edition of Seeking Certainty soon."
-    });
-    setEmail("");
   };
   return <footer className="bg-forest-green text-primary-foreground py-12 px-6 md:px-12">
       <div className="max-w-7xl mx-auto">
@@ -53,9 +82,22 @@ export const Footer = () => {
               Periodic insights on credential strategy, trust marketing, and the future of authority online.
             </p>
             <form onSubmit={handleSubscribe} className="flex gap-2">
-              <Input type="email" placeholder="Your email address" value={email} onChange={e => setEmail(e.target.value)} className="bg-background/10 border-primary-foreground/30 text-primary-foreground placeholder:text-primary-foreground/50" />
-              <Button type="submit" variant="secondary" className="whitespace-nowrap">
-                Subscribe
+              <Input 
+                type="email" 
+                placeholder="Your email address" 
+                value={email} 
+                onChange={e => setEmail(e.target.value)} 
+                className="bg-background/10 border-primary-foreground/30 text-primary-foreground placeholder:text-primary-foreground/50"
+                maxLength={255}
+                disabled={isSubmitting}
+              />
+              <Button 
+                type="submit" 
+                variant="secondary" 
+                className="whitespace-nowrap"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "..." : "Subscribe"}
               </Button>
             </form>
           </div>
