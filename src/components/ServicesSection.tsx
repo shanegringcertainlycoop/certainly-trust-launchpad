@@ -93,8 +93,8 @@ export const ServicesSection = () => {
                     <div className="pt-4 border-t">
                       <p className="text-xs text-foreground/60 font-medium mb-2">Trusted by:</p>
                       <div className="flex items-center gap-3 flex-wrap">
-                        {service.trustedBy.map((client, idx) => <div key={idx} className="h-8 flex items-center px-3 py-1 bg-muted/30 rounded">
-                            <img src={client.logo} alt={client.name} className="h-full w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
+                        {service.trustedBy.map((client, idx) => <div key={idx} className="h-8 flex items-center">
+                            <img src={client.logo} alt={client.name} className="h-full w-auto object-contain opacity-60 hover:opacity-100 transition-opacity" />
                           </div>)}
                       </div>
                     </div>
@@ -124,8 +124,8 @@ export const ServicesSection = () => {
                     <div className="pt-4 border-t">
                       <p className="text-xs text-foreground/60 font-medium mb-2">Trusted by:</p>
                       <div className="flex items-center gap-3 flex-wrap">
-                        {service.trustedBy.map((client, idx) => <div key={idx} className="h-8 flex items-center px-3 py-1 bg-muted/30 rounded">
-                            <img src={client.logo} alt={client.name} className="h-full w-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
+                        {service.trustedBy.map((client, idx) => <div key={idx} className="h-8 flex items-center">
+                            <img src={client.logo} alt={client.name} className="h-full w-auto object-contain opacity-60 hover:opacity-100 transition-opacity" />
                           </div>)}
                       </div>
                     </div>
