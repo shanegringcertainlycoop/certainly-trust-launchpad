@@ -37,6 +37,9 @@ const services = [{
   }, {
     name: "CodeGreen",
     logo: "/logos/codegreen.png"
+  }, {
+    name: "ECA",
+    logo: "/logos/eca.png"
   }],
   url: "https://catalyst.certainly.coop/"
 }];
