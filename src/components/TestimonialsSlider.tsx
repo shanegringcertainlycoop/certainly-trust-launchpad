@@ -9,7 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import avatarAndrew from "@/assets/avatar-andrew.png";
 import slideCodegreen from "@/assets/slide-codegreen.png";
-import caseDrvn from "@/assets/case-drvn.jpg";
+import slideOnePercent from "@/assets/slide-onepercentplanet.png";
 import caseIwbi from "@/assets/case-iwbi.jpg";
 
 const testimonials = [
@@ -23,13 +23,13 @@ const testimonials = [
     image: slideCodegreen,
   },
   {
-    headline: "Increased engagement by",
-    highlight: "300%",
-    quote: '"Working with Certainly transformed our digital presence. Their strategic approach to brand building delivered measurable results that exceeded our expectations."',
-    name: "Sarah Chen",
-    title: "Marketing Director, DRVN",
-    avatar: "/logos/drvn.png",
-    image: caseDrvn,
+    headline: "Automating",
+    highlight: "1000s of hours of outreach",
+    quote: '"Big shout out to the team at Certainly for the assist on our CRM audit and segmentation issues with our existing customer base. Their work is positioning us for a very effective business development season."',
+    name: "Jim Lehnhoff",
+    title: "Director of Business Development, 1% for the Planet",
+    avatar: null,
+    image: slideOnePercent,
   },
   {
     headline: "Built trust with",
@@ -76,12 +76,18 @@ export const TestimonialsSlider = () => {
                     </p>
                     
                     <div className="flex items-center gap-4">
-                      <div className="w-14 h-14 rounded-full overflow-hidden">
-                        <img 
-                          src={item.avatar} 
-                          alt={item.name}
-                          className="w-full h-full object-cover"
-                        />
+                      <div className="w-14 h-14 rounded-full overflow-hidden bg-forest-green/20 flex items-center justify-center">
+                        {item.avatar ? (
+                          <img 
+                            src={item.avatar} 
+                            alt={item.name}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <span className="text-forest-green font-semibold text-lg">
+                            {item.name.split(' ').map(n => n[0]).join('')}
+                          </span>
+                        )}
                       </div>
                       <div>
                         <p className="font-semibold text-near-black">{item.name}</p>
