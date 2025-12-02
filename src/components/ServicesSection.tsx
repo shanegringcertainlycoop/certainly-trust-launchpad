@@ -11,6 +11,9 @@ const services = [{
   }, {
     name: "USGBC",
     logo: "/logos/usgbc.png"
+  }, {
+    name: "DRVN",
+    logo: "/logos/drvn.png"
   }],
   url: "https://cyoc.certainly.coop"
 }, {
