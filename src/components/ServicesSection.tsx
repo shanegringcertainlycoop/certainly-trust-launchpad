@@ -53,20 +53,16 @@ const services = [{
 }];
 export const ServicesSection = () => {
   const [isContactOpen, setIsContactOpen] = useState(false);
-
   const handleServiceClick = () => {
     setIsContactOpen(true);
   };
-  return (
-    <>
+  return <>
       <ContactModal open={isContactOpen} onOpenChange={setIsContactOpen} />
       
       <section id="services" className="py-24 bg-light-gray px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-near-black mb-4">
-            Our Services
-          </h2>
+          <h2 className="text-4xl md:text-5xl font-serif font-bold text-near-black mb-4">Current offers</h2>
           <p className="text-xl text-foreground/70">
             Built to create credibility that compounds.
           </p>
@@ -150,6 +146,5 @@ export const ServicesSection = () => {
         </div>
       </div>
     </section>
-    </>
-  );
+    </>;
 };
