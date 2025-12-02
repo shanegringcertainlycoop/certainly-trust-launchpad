@@ -7,7 +7,8 @@ import {
   CarouselApi,
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
-import caseCodegreen from "@/assets/case-codegreen.jpg";
+import avatarAndrew from "@/assets/avatar-andrew.png";
+import slideCodegreen from "@/assets/slide-codegreen.png";
 import caseDrvn from "@/assets/case-drvn.jpg";
 import caseIwbi from "@/assets/case-iwbi.jpg";
 
@@ -18,8 +19,8 @@ const testimonials = [
     quote: '"The Certainly process and range of accessible experts is unbeatable. In less than a month, and for half the price of other quotes -- we launched a beautiful, easy to edit website -- on time. It\'s a great value."',
     name: "Andrew Dimitriou",
     title: "Sr. Director, CodeGreen",
-    avatar: "/logos/codegreen.png",
-    image: caseCodegreen,
+    avatar: avatarAndrew,
+    image: slideCodegreen,
   },
   {
     headline: "Increased engagement by",
@@ -75,11 +76,11 @@ export const TestimonialsSlider = () => {
                     </p>
                     
                     <div className="flex items-center gap-4">
-                      <div className="w-14 h-14 rounded-full bg-[#B8E6C1] flex items-center justify-center overflow-hidden">
+                      <div className="w-14 h-14 rounded-full overflow-hidden">
                         <img 
                           src={item.avatar} 
                           alt={item.name}
-                          className="w-8 h-8 object-contain"
+                          className="w-full h-full object-cover"
                         />
                       </div>
                       <div>
