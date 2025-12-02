@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ContactModal } from "@/components/ContactSection";
+import { PartnershipDialog } from "@/components/PartnershipDialog";
 import certainlyLogo from "@/assets/certainly-logo.png";
 
 export const HeroSection = () => {
-  const [isContactOpen, setIsContactOpen] = useState(false);
+  const [isPartnershipOpen, setIsPartnershipOpen] = useState(false);
 
   return (
     <>
-      <ContactModal open={isContactOpen} onOpenChange={setIsContactOpen} />
+      <PartnershipDialog open={isPartnershipOpen} onOpenChange={setIsPartnershipOpen} />
     <section className="min-h-screen bg-cream flex items-center py-20 px-6 md:px-12">
       <div className="max-w-4xl mx-auto w-full text-center">
         <div className="space-y-6">
@@ -37,7 +37,7 @@ export const HeroSection = () => {
             <Button 
               variant="cta" 
               size="lg"
-              onClick={() => setIsContactOpen(true)}
+              onClick={() => setIsPartnershipOpen(true)}
               className="text-base"
             >
               Explore a Partnership
