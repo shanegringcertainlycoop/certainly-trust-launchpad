@@ -63,9 +63,7 @@ export const ServicesSection = () => {
         <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-serif font-bold text-near-black mb-4">Current offers</h2>
-          <p className="text-xl text-foreground/70">
-            Built to create credibility that compounds.
-          </p>
+          <p className="text-xl text-foreground/70">Industry-tested programs and services to advance your brand.</p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
@@ -148,10 +146,7 @@ export const ServicesSection = () => {
         <div className="text-center mt-12">
           <p className="text-lg text-foreground/70">
             We also do custom projects, consulting, and 1:1 advising for organizations.{" "}
-            <button 
-              onClick={handleServiceClick}
-              className="text-primary font-medium hover:underline"
-            >
+            <button onClick={handleServiceClick} className="text-primary font-medium hover:underline">
               Contact us
             </button>.
           </p>
