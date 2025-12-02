@@ -28,8 +28,8 @@ const services = [{
     name: "Longevity",
     logo: "/logos/longevity.png"
   }, {
-    name: "CodeGreen",
-    logo: "/logos/codegreen.png"
+    name: "Pinchin",
+    logo: "/logos/pinchin.png"
   }],
   url: "https://30dayweb.certainly.coop"
 }, {
