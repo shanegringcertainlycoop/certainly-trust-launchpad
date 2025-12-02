@@ -85,7 +85,7 @@ export const ServicesSection = () => {
                     rel="noopener noreferrer"
                     className="block space-y-4 cursor-pointer"
                   >
-                    <p className="text-lg font-serif text-near-black leading-relaxed">
+                    <p className="text-xl font-serif text-near-black leading-relaxed">
                       {service.summary}
                     </p>
                     
@@ -126,7 +126,7 @@ export const ServicesSection = () => {
                   </a>
                 ) : (
                   <>
-                    <p className="text-lg font-serif text-near-black leading-relaxed">
+                    <p className="text-xl font-serif text-near-black leading-relaxed">
                       {service.summary}
                     </p>
                     
