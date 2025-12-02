@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ContactModal } from "@/components/ContactSection";
+import { PartnershipDialog } from "@/components/PartnershipDialog";
 const services = [{
   title: "Create Your Own Credential™",
   summary: "Transform your method into a market-recognized standard.",
@@ -52,12 +52,20 @@ const services = [{
   url: "https://catalyst.certainly.coop/"
 }];
 export const ServicesSection = () => {
-  const [isContactOpen, setIsContactOpen] = useState(false);
-  const handleServiceClick = () => {
-    setIsContactOpen(true);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<string | undefined>();
+  
+  const handleExplorePartnership = (serviceName?: string) => {
+    setSelectedService(serviceName);
+    setIsDialogOpen(true);
   };
+  
   return <>
-      <ContactModal open={isContactOpen} onOpenChange={setIsContactOpen} />
+      <PartnershipDialog 
+        open={isDialogOpen} 
+        onOpenChange={setIsDialogOpen}
+        serviceName={selectedService}
+      />
       
       <section id="services" className="py-24 bg-light-gray px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
@@ -140,8 +148,12 @@ export const ServicesSection = () => {
                       </div>
                     </div>
 
-                    <Button variant="cta" className="w-full" onClick={handleServiceClick}>
-                      Learn More
+                    <Button 
+                      variant="cta" 
+                      className="w-full" 
+                      onClick={() => handleExplorePartnership(service.title)}
+                    >
+                      Explore a Partnership
                     </Button>
                   </>}
               </CardContent>
@@ -151,7 +163,10 @@ export const ServicesSection = () => {
         <div className="text-center mt-12">
           <p className="text-lg text-foreground/70">
             We also do custom projects, consulting, and 1:1 advising for organizations.{" "}
-            <button onClick={handleServiceClick} className="text-primary font-medium hover:underline">
+            <button 
+              onClick={() => handleExplorePartnership()}
+              className="text-primary font-medium hover:underline"
+            >
               Contact us
             </button>.
           </p>
