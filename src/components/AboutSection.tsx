@@ -1,6 +1,5 @@
 export const AboutSection = () => {
-  return (
-    <section className="py-24 bg-near-black px-6 md:px-12">
+  return <section className="py-24 bg-near-black px-6 md:px-12">
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-12">
           {/* Left Column */}
@@ -10,8 +9,7 @@ export const AboutSection = () => {
             </h2>
             <div className="space-y-4 text-white/80 leading-relaxed">
               <p>
-                Certainly is a small, tight-knit collective of builders, writers, and strategists 
-                helping mission-driven experts scale their credibility.
+                Certainly Cooperative is a small, tight-knit collective of builders, writers, and strategists helping mission-driven brands scale their credibility.
               </p>
               <p>
                 We've worked behind the scenes on certification programs, digital ecosystems, 
@@ -39,12 +37,7 @@ export const AboutSection = () => {
                 they help others communicate.
               </p>
               <p>
-              <a 
-                href="https://ica.coop/en/cooperatives/cooperative-identity" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-cream hover:text-cream/80 hover:underline font-medium transition-colors"
-              >
+              <a href="https://ica.coop/en/cooperatives/cooperative-identity" target="_blank" rel="noopener noreferrer" className="text-cream hover:text-cream/80 hover:underline font-medium transition-colors">
                   Learn about the seven cooperative principles →
                 </a>
               </p>
@@ -52,6 +45,5 @@ export const AboutSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
