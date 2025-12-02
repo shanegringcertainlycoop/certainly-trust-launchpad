@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
 import avatarAndrew from "@/assets/avatar-andrew.png";
+import avatarJim from "@/assets/avatar-jim.png";
 import slideCodegreen from "@/assets/slide-codegreen.png";
 import slideOnePercent from "@/assets/slide-onepercentplanet.png";
 import caseIwbi from "@/assets/case-iwbi.jpg";
@@ -28,7 +29,7 @@ const testimonials = [
     quote: '"Big shout out to the team at Certainly for the assist on our CRM audit and segmentation issues with our existing customer base. Their work is positioning us for a very effective business development season."',
     name: "Jim Lehnhoff",
     title: "Director of Business Development, 1% for the Planet",
-    avatar: null,
+    avatar: avatarJim,
     image: slideOnePercent,
   },
   {
