@@ -82,7 +82,7 @@ const BlogPost = () => {
             <img 
               src={post.featured_image} 
               alt={post.title}
-              className="w-full h-auto rounded-lg shadow-lg object-contain"
+              className="w-full h-auto rounded-lg object-contain"
             />
           </div>
         </div>
