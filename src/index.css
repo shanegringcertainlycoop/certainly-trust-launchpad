@@ -90,6 +90,15 @@
   }
 }
 
+/* Blog prose styling - handle empty paragraphs from rich text editor */
+.prose p:empty {
+  min-height: 1.5em;
+}
+
+.prose p + p {
+  margin-top: 1.5em;
+}
+
 /* Hide Lovable badge */
 #lovable-badge {
   display: none !important;
