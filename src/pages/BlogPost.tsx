@@ -121,17 +121,15 @@ const BlogPost = () => {
             {/* Content */}
             <div 
               className="prose prose-lg max-w-none 
-                prose-headings:font-serif prose-headings:text-foreground prose-headings:mt-8 prose-headings:mb-4
-                prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
-                prose-p:text-foreground/80 prose-p:leading-[1.8] prose-p:mb-4
+                prose-headings:font-serif prose-headings:text-foreground
+                prose-p:text-foreground/80
                 prose-a:text-primary hover:prose-a:text-accent prose-a:underline
                 prose-strong:text-foreground prose-strong:font-semibold
                 prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-foreground/70
-                prose-ul:list-disc prose-ul:pl-6 prose-ul:space-y-1
-                prose-ol:list-decimal prose-ol:pl-6 prose-ol:space-y-1
-                prose-li:text-foreground/80 prose-li:leading-[1.8]
-                prose-img:rounded-lg prose-img:my-8
-                [&_br]:block [&_br]:content-[''] [&_br]:mt-4"
+                prose-ul:list-disc prose-ul:pl-6
+                prose-ol:list-decimal prose-ol:pl-6
+                prose-li:text-foreground/80
+                prose-img:rounded-lg prose-img:my-8"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
           </div>
