@@ -9,6 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
+import { ImageUpload } from '@/components/ImageUpload';
 
 const AdminPostEditor = () => {
   const { id } = useParams<{ id: string }>();
@@ -203,12 +204,10 @@ const AdminPostEditor = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="image">Featured Image URL</Label>
-              <Input
-                id="image"
+              <Label>Featured Image</Label>
+              <ImageUpload
                 value={featuredImage}
-                onChange={(e) => setFeaturedImage(e.target.value)}
-                placeholder="https://example.com/image.jpg"
+                onChange={setFeaturedImage}
               />
             </div>
 
