@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 const Admin = () => {
-  const { user, isAdmin, isLoading, signOut } = useAuth();
+  const { user, isAdmin, isLoading, isAdminLoading, signOut } = useAuth();
   const { data: posts, isLoading: postsLoading } = useBlogPosts(false);
   const deletePost = useDeleteBlogPost();
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const Admin = () => {
   }, [user, isLoading, navigate]);
 
   useEffect(() => {
-    if (!isLoading && user && !isAdmin) {
+    if (!isLoading && !isAdminLoading && user && !isAdmin) {
       toast({
         title: 'Access Denied',
         description: 'You need admin privileges to access this page.',
@@ -40,7 +40,7 @@ const Admin = () => {
       });
       navigate('/');
     }
-  }, [isAdmin, isLoading, user, navigate, toast]);
+  }, [isAdmin, isLoading, isAdminLoading, user, navigate, toast]);
 
   const handleDelete = async () => {
     if (!deleteId) return;
@@ -63,7 +63,7 @@ const Admin = () => {
     navigate('/');
   };
 
-  if (isLoading || !isAdmin) {
+  if (isLoading || isAdminLoading || !isAdmin) {
     return (
       <div className="min-h-screen bg-cream flex items-center justify-center">
         <div className="animate-pulse text-muted-foreground">Loading...</div>
