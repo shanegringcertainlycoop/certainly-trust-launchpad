@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
 import { ImageUpload } from '@/components/ImageUpload';
+import { RichTextEditor } from '@/components/RichTextEditor';
 
 const AdminPostEditor = () => {
   const { id } = useParams<{ id: string }>();
@@ -192,14 +193,10 @@ const AdminPostEditor = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="content">Content * (HTML supported)</Label>
-              <Textarea
-                id="content"
+              <Label>Content *</Label>
+              <RichTextEditor
                 value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder="Write your post content here..."
-                rows={12}
-                required
+                onChange={setContent}
               />
             </div>
 
