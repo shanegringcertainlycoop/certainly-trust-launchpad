@@ -1,7 +1,8 @@
-import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { useParams } from 'react-router-dom';
 import { useBlogPost } from '@/hooks/useBlogPosts';
 import { format } from 'date-fns';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 import { SEO } from '@/components/SEO';
 import { BlogPostSchema } from '@/components/StructuredData';
 import { getDispatchImage, isDispatch } from '@/lib/dispatch-images';
@@ -13,17 +14,7 @@ const BlogPost = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-cream">
-        <header className="py-6 border-b border-border">
-          <div className="container mx-auto px-6">
-            <Link 
-              to="/blog" 
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to blog
-            </Link>
-          </div>
-        </header>
+        <Header />
         <div className="container mx-auto px-6 py-16 animate-pulse">
           <div className="max-w-3xl mx-auto">
             <div className="h-10 bg-muted rounded w-3/4 mb-4" />
@@ -42,17 +33,7 @@ const BlogPost = () => {
   if (!post) {
     return (
       <div className="min-h-screen bg-cream">
-        <header className="py-6 border-b border-border">
-          <div className="container mx-auto px-6">
-            <Link 
-              to="/blog" 
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to blog
-            </Link>
-          </div>
-        </header>
+        <Header />
         <div className="container mx-auto px-6 py-16 text-center">
           <h1 className="text-3xl font-serif text-foreground mb-4">Post not found</h1>
           <p className="text-muted-foreground">
@@ -82,25 +63,14 @@ const BlogPost = () => {
         featuredImage={post.featured_image}
       />
 
-      {/* Header */}
-      <header className="py-6 border-b border-border">
-        <div className="container mx-auto px-6">
-          <Link
-            to="/blog"
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to blog
-          </Link>
-        </div>
-      </header>
+      <Header />
 
       {/* Featured Image */}
       {(post.featured_image || isDispatch(post.tags)) && (
         <div className="container mx-auto px-6 pt-8">
           <div className="max-w-3xl mx-auto">
-            <img 
-              src={post.featured_image || getDispatchImage(post.slug)} 
+            <img
+              src={post.featured_image || getDispatchImage(post.slug)}
               alt={post.title}
               className="w-full h-auto rounded-lg object-contain"
             />
@@ -117,7 +87,7 @@ const BlogPost = () => {
               {post.tags && post.tags.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-4">
                   {post.tags.map((tag) => (
-                    <span 
+                    <span
                       key={tag}
                       className="text-xs font-sans uppercase tracking-wider text-accent bg-accent/10 px-2 py-1 rounded"
                     >
@@ -139,7 +109,7 @@ const BlogPost = () => {
             </div>
 
             {/* Content */}
-            <div 
+            <div
 className="dispatch-content prose prose-lg max-w-2xl mx-auto
                 prose-headings:font-serif prose-headings:text-foreground
                 prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:pb-3 prose-h2:border-b prose-h2:border-border
@@ -158,6 +128,8 @@ className="dispatch-content prose prose-lg max-w-2xl mx-auto
           </div>
         </div>
       </article>
+
+      <Footer />
     </div>
   );
 };

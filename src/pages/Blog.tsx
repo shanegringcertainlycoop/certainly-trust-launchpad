@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
 import { useBlogPosts } from '@/hooks/useBlogPosts';
 import { format } from 'date-fns';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 import { SEO } from '@/components/SEO';
 import { getDispatchImage, isDispatch } from '@/lib/dispatch-images';
 
@@ -15,18 +16,7 @@ const Blog = () => {
         description="Insights and perspectives on building trust, credentials, digital branding, and content strategy from Certainly Cooperative."
         path="/blog"
       />
-      {/* Header */}
-      <header className="py-6 border-b border-border">
-        <div className="container mx-auto px-6">
-          <Link 
-            to="/" 
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to home
-          </Link>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero */}
       <section className="py-16 md:py-24 bg-forest-green text-primary-foreground">
@@ -110,6 +100,8 @@ const Blog = () => {
           )}
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };

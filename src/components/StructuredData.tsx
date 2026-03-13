@@ -41,6 +41,57 @@ export const WebSiteSchema = () => {
   );
 };
 
+interface ServiceSchemaProps {
+  name: string;
+  description: string;
+  url: string;
+}
+
+export const ServiceSchema = ({ name, description, url }: ServiceSchemaProps) => {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name,
+    description,
+    url,
+    provider: {
+      "@type": "Organization",
+      name: "Certainly Cooperative",
+      url: SITE_URL,
+    },
+  };
+
+  return (
+    <Helmet>
+      <script type="application/ld+json">{JSON.stringify(schema)}</script>
+    </Helmet>
+  );
+};
+
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+export const BreadcrumbSchema = ({ items }: { items: BreadcrumbItem[] }) => {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+
+  return (
+    <Helmet>
+      <script type="application/ld+json">{JSON.stringify(schema)}</script>
+    </Helmet>
+  );
+};
+
 interface BlogPostSchemaProps {
   title: string;
   description: string;

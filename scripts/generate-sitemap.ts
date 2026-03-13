@@ -42,6 +42,12 @@ async function generateSitemap() {
 
   const staticPages = [
     { loc: "/", changefreq: "weekly", priority: "1.0" },
+    { loc: "/services", changefreq: "monthly", priority: "0.9" },
+    { loc: "/services/marketing", changefreq: "monthly", priority: "0.8" },
+    { loc: "/services/operations", changefreq: "monthly", priority: "0.8" },
+    { loc: "/services/technology", changefreq: "monthly", priority: "0.8" },
+    { loc: "/about", changefreq: "monthly", priority: "0.7" },
+    { loc: "/contact", changefreq: "monthly", priority: "0.7" },
     { loc: "/blog", changefreq: "daily", priority: "0.8" },
   ];
 

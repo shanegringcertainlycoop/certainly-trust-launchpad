@@ -171,8 +171,57 @@ async function prerenderMeta() {
   mkdirSync(blogDir, { recursive: true });
   writeFileSync(resolve(blogDir, "index.html"), blogHtml, "utf-8");
 
+  // Generate static pages
+  const staticPages = [
+    {
+      path: "services",
+      title: "Services",
+      description: "Marketing, operations, and technology services for certification brands. We help certification bodies grow their programs and modernize their digital presence.",
+    },
+    {
+      path: "services/marketing",
+      title: "Certification Marketing Services",
+      description: "Fill your candidate pipeline, build brand authority, and grow your certification program. Marketing strategy, lead generation, and content for certification bodies.",
+    },
+    {
+      path: "services/operations",
+      title: "Certification Operations & Program Management",
+      description: "Streamline your certification program management, prepare for NCCA or ISO 17024 accreditation, and build governance systems that scale.",
+    },
+    {
+      path: "services/technology",
+      title: "Certification Technology & Website Design",
+      description: "Build websites, digital ecosystems, and automation for your certification program. Technology strategy, website design, and digital credential solutions.",
+    },
+    {
+      path: "about",
+      title: "About",
+      description: "Certainly Cooperative is a team of marketing, technology, and certification specialists. Built by former IWBI and USGBC staff, we help certification brands grow.",
+    },
+    {
+      path: "contact",
+      title: "Contact",
+      description: "Connect with Certainly Cooperative. Tell us about your certification program and we'll share how we can help with marketing, operations, or technology.",
+    },
+  ];
+
+  let staticCount = 0;
+  for (const page of staticPages) {
+    const html = injectMeta(template, {
+      title: page.title,
+      description: page.description,
+      url: `${SITE_URL}/${page.path}`,
+      type: "website",
+    });
+
+    const dir = resolve(distDir, page.path);
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(resolve(dir, "index.html"), html, "utf-8");
+    staticCount++;
+  }
+
   console.log(
-    `Prerendered meta tags for ${count} blog posts + blog listing → ${distDir}/blog/`
+    `Prerendered meta tags for ${count} blog posts + blog listing + ${staticCount} static pages → ${distDir}/`
   );
 }
 
