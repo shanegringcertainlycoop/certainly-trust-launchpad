@@ -17,7 +17,25 @@ function loadEnvFile() {
 loadEnvFile();
 
 const SITE_URL = "https://certainly.coop";
-const DEFAULT_OG_IMAGE = `${SITE_URL}/images/dispatch-og.jpg`;
+
+// Mirror dispatch-images.ts logic for build-time OG tags
+const DISPATCH_CARDS = [
+  "/images/dispatch-card-1.jpg",
+  "/images/dispatch-card-2.jpg",
+  "/images/dispatch-card-3.jpg",
+];
+
+function getDispatchImage(slug: string): string {
+  let hash = 0;
+  for (let i = 0; i < slug.length; i++) {
+    hash = (hash * 31 + slug.charCodeAt(i)) | 0;
+  }
+  return DISPATCH_CARDS[Math.abs(hash) % DISPATCH_CARDS.length];
+}
+
+function isDispatch(tags: string[] | null): boolean {
+  return tags?.includes("Certification Dispatch") ?? false;
+}
 
 const supabaseUrl = process.env.VITE_SUPABASE_URL;
 const supabaseKey = process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
@@ -45,16 +63,15 @@ function injectMeta(
     title: string;
     description: string;
     url: string;
-    image: string;
+    image?: string;
     type: string;
   }
 ): string {
   const t = escapeHtml(opts.title);
   const d = escapeHtml(opts.description);
   const u = opts.url;
-  const img = opts.image;
 
-  return template
+  let result = template
     .replace(
       /<title>[^<]*<\/title>/,
       `<title>${t} | Certainly</title>`
@@ -72,21 +89,32 @@ function injectMeta(
       `$1${d}$2`
     )
     .replace(
-      /(<meta\s+property="og:image"\s+content=")[^"]*(")/,
-      `$1${img}$2`
-    )
-    .replace(
       /(<meta\s+property="og:url"\s+content=")[^"]*(")/,
       `$1${u}$2`
     )
     .replace(
       /(<meta\s+property="og:type"\s+content=")[^"]*(")/,
       `$1${opts.type}$2`
-    )
-    .replace(
-      /(<meta\s+name="twitter:image"\s+content=")[^"]*(")/,
-      `$1${img}$2`
     );
+
+  if (opts.image) {
+    result = result
+      .replace(
+        /(<meta\s+property="og:image"\s+content=")[^"]*(")/,
+        `$1${opts.image}$2`
+      )
+      .replace(
+        /(<meta\s+name="twitter:image"\s+content=")[^"]*(")/,
+        `$1${opts.image}$2`
+      );
+  } else {
+    // Remove image meta tags entirely when no image is set
+    result = result
+      .replace(/\s*<meta\s+property="og:image"\s+content="[^"]*"\s*\/?\s*>\s*/g, "\n")
+      .replace(/\s*<meta\s+name="twitter:image"\s+content="[^"]*"\s*\/?\s*>\s*/g, "\n");
+  }
+
+  return result;
 }
 
 async function prerenderMeta() {
@@ -96,7 +124,7 @@ async function prerenderMeta() {
   // Fetch published blog posts
   const { data: posts, error } = await supabase
     .from("blog_posts")
-    .select("title, slug, excerpt, featured_image")
+    .select("title, slug, excerpt, featured_image, tags")
     .eq("status", "published")
     .order("published_at", { ascending: false });
 
@@ -113,7 +141,8 @@ async function prerenderMeta() {
   // Generate per-post HTML files
   let count = 0;
   for (const post of posts) {
-    const ogImage = post.featured_image || DEFAULT_OG_IMAGE;
+    const ogImage = post.featured_image
+      || (isDispatch(post.tags) ? `${SITE_URL}${getDispatchImage(post.slug)}` : undefined);
     const description = post.excerpt || "";
     const html = injectMeta(template, {
       title: post.title,
@@ -135,7 +164,6 @@ async function prerenderMeta() {
     description:
       "Industry intelligence, certification strategy, and weekly dispatches from Certainly Cooperative.",
     url: `${SITE_URL}/blog`,
-    image: DEFAULT_OG_IMAGE,
     type: "website",
   });
 

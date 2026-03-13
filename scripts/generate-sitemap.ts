@@ -70,9 +70,16 @@ ${allPages
 </urlset>
 `;
 
-  const outPath = resolve(process.cwd(), "public/sitemap.xml");
-  writeFileSync(outPath, xml, "utf-8");
-  console.log(`Sitemap generated with ${allPages.length} URLs → ${outPath}`);
+  // Write to both public/ (for dev server) and dist/ (for deploy)
+  const publicPath = resolve(process.cwd(), "public/sitemap.xml");
+  writeFileSync(publicPath, xml, "utf-8");
+
+  const distPath = resolve(process.cwd(), "dist/sitemap.xml");
+  if (existsSync(resolve(process.cwd(), "dist"))) {
+    writeFileSync(distPath, xml, "utf-8");
+  }
+
+  console.log(`Sitemap generated with ${allPages.length} URLs`);
 }
 
 generateSitemap();
