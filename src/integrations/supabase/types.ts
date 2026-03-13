@@ -137,6 +137,18 @@ export type Database = {
         }
         Returns: boolean
       }
+      publish_dispatch: {
+        Args: {
+          p_author_name?: string
+          p_content: string
+          p_excerpt: string
+          p_published_at: string
+          p_slug: string
+          p_tags: string[]
+          p_title: string
+        }
+        Returns: Json
+      }
     }
     Enums: {
       app_role: "admin" | "user"

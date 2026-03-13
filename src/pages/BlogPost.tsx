@@ -69,7 +69,7 @@ const BlogPost = () => {
         description={post.excerpt || `Read "${post.title}" by ${post.author_name} on the Certainly Cooperative blog.`}
         path={`/blog/${post.slug}`}
         ogType="article"
-        ogImage={post.featured_image || undefined}
+        ogImage={post.featured_image || (post.tags?.includes("Certification Dispatch") ? "https://certainly.coop/images/dispatch-og.jpg" : undefined)}
       />
       <BlogPostSchema
         title={post.title}
