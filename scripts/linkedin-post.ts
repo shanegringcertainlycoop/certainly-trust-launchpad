@@ -68,24 +68,68 @@ interface Dispatch {
 function buildPostText(dispatch: Dispatch): string {
   const blogUrl = `https://certainly.coop/blog/${dispatch.slug}`;
 
-  // Extract h3 headlines for bullet points
-  const headlines = dispatch.sections
-    .filter((s) => s.type === "h3")
-    .map((s) => s.content || "")
-    .slice(0, 4); // Top 4 stories
+  // Pull the first paragraph — often contains the juiciest stat
+  const firstParagraph = dispatch.sections.find(
+    (s) => s.type === "paragraph" && s.content
+  );
 
-  const bulletPoints = headlines.map((h) => `\u2022 ${h}`).join("\n");
+  // Extract a lead stat/hook from the first paragraph if possible
+  // Look for numbers, dollar amounts, percentages
+  const statMatch = firstParagraph?.content?.match(
+    /(\$[\d.,]+\s*(?:billion|million|B|M)|[\d.,]+%|\d[\d,]+\s+(?:companies|organizations|products|entities))/i
+  );
 
-  return `${dispatch.title}
+  // Pick the first h3 from each h2 section so we cover different topics
+  const topStories: string[] = [];
+  let lastH2 = "";
+  const usedH2s = new Set<string>();
+  for (const section of dispatch.sections) {
+    if (section.type === "h2") lastH2 = section.content || "";
+    if (
+      section.type === "h3" &&
+      section.content &&
+      !usedH2s.has(lastH2) &&
+      topStories.length < 4
+    ) {
+      topStories.push(section.content);
+      usedH2s.add(lastH2);
+    }
+  }
 
-${dispatch.excerpt}
+  // Build the hook: lead with a stat if we found one, otherwise use the excerpt
+  let hook: string;
+  if (statMatch) {
+    // Pull the sentence containing the stat
+    const sentences = (firstParagraph!.content || "").split(/\.\s+/);
+    const statSentence = sentences.find((s) => s.includes(statMatch[1]));
+    hook = statSentence
+      ? statSentence.replace(/\s*Source:.*$/, "").trim() + "."
+      : dispatch.excerpt.split(".")[0] + ".";
+  } else {
+    hook = dispatch.excerpt.split(".")[0] + ".";
+  }
 
-This week's highlights:
-${bulletPoints}
+  // Build story teasers — short, punchy, curiosity-driven
+  const teasers = topStories.map((h) => `→ ${h}`).join("\n");
 
-Read the full dispatch \u2192 ${blogUrl}
+  // Week label from publishedAt
+  const pubDate = new Date(dispatch.publishedAt + "T12:00:00");
+  const weekLabel = pubDate.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+  });
 
-#Certifications #Sustainability #Compliance #TrustBuilding #CertainlyCooperative`;
+  return `${hook}
+
+Here's what moved in certifications this week:
+
+${teasers}
+
+The full breakdown — with sources and context — is in this week's Certification Industry Dispatch (${weekLabel}).
+
+${blogUrl}
+
+#Certifications #Sustainability #Compliance`;
 }
 
 // --- Post to LinkedIn ---
