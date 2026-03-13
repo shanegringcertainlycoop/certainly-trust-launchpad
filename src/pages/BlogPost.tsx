@@ -96,7 +96,7 @@ const BlogPost = () => {
       </header>
 
       {/* Featured Image */}
-      {post.featured_image && (
+      {(post.featured_image || isDispatch(post.tags)) && (
         <div className="container mx-auto px-6 pt-8">
           <div className="max-w-3xl mx-auto">
             <img 

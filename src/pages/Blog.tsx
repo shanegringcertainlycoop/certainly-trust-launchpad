@@ -62,10 +62,10 @@ const Blog = () => {
                   to={`/blog/${post.slug}`}
                   className="group"
                 >
-                  {post.featured_image && (
+                  {(post.featured_image || isDispatch(post.tags)) && (
                     <div className="aspect-video overflow-hidden rounded-lg mb-4">
                       <img 
-                        src={post.featured_image} 
+                        src={post.featured_image || getDispatchImage(post.slug)} 
                         alt={post.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
