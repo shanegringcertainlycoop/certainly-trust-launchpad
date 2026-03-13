@@ -3,6 +3,7 @@ import { ArrowLeft } from 'lucide-react';
 import { useBlogPosts } from '@/hooks/useBlogPosts';
 import { format } from 'date-fns';
 import { SEO } from '@/components/SEO';
+import { getDispatchImage, isDispatch } from '@/lib/dispatch-images';
 
 const Blog = () => {
   const { data: posts, isLoading } = useBlogPosts(true);
