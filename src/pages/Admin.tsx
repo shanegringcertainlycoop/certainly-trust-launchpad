@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Plus, Pencil, Trash2, LogOut, Eye } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { SEO } from '@/components/SEO';
 import { useBlogPosts, useDeleteBlogPost, BlogPost } from '@/hooks/useBlogPosts';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -73,10 +74,16 @@ const Admin = () => {
 
   return (
     <div className="min-h-screen bg-cream">
+      <SEO
+        title="Admin Dashboard"
+        description="Certainly Cooperative admin dashboard."
+        path="/admin"
+        noindex
+      />
       <header className="py-6 border-b border-border">
         <div className="container mx-auto px-6 flex items-center justify-between">
-          <Link 
-            to="/" 
+          <Link
+            to="/"
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />

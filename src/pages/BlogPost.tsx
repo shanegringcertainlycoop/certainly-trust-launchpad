@@ -2,6 +2,8 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { useBlogPost } from '@/hooks/useBlogPosts';
 import { format } from 'date-fns';
+import { SEO } from '@/components/SEO';
+import { BlogPostSchema } from '@/components/StructuredData';
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -62,11 +64,28 @@ const BlogPost = () => {
 
   return (
     <div className="min-h-screen bg-cream">
+      <SEO
+        title={post.title}
+        description={post.excerpt || `Read "${post.title}" by ${post.author_name} on the Certainly Cooperative blog.`}
+        path={`/blog/${post.slug}`}
+        ogType="article"
+        ogImage={post.featured_image || undefined}
+      />
+      <BlogPostSchema
+        title={post.title}
+        description={post.excerpt || ""}
+        slug={post.slug}
+        authorName={post.author_name}
+        publishedAt={post.published_at}
+        updatedAt={post.updated_at}
+        featuredImage={post.featured_image}
+      />
+
       {/* Header */}
       <header className="py-6 border-b border-border">
         <div className="container mx-auto px-6">
-          <Link 
-            to="/blog" 
+          <Link
+            to="/blog"
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -120,16 +139,19 @@ const BlogPost = () => {
 
             {/* Content */}
             <div 
-className="prose prose-xl max-w-2xl mx-auto
-                prose-headings:font-serif prose-headings:text-foreground prose-headings:mt-8 prose-headings:mb-4
-                prose-p:text-foreground prose-p:leading-relaxed prose-p:tracking-wide prose-p:my-6
+className="dispatch-content prose prose-lg max-w-2xl mx-auto
+                prose-headings:font-serif prose-headings:text-foreground
+                prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:pb-3 prose-h2:border-b prose-h2:border-border
+                prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
+                prose-p:text-foreground prose-p:leading-relaxed prose-p:tracking-wide prose-p:my-4
                 prose-a:text-primary hover:prose-a:text-accent prose-a:underline
                 prose-strong:text-foreground prose-strong:font-semibold
-                prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-foreground/70
+                prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:bg-primary/5 prose-blockquote:pl-6 prose-blockquote:pr-4 prose-blockquote:py-4 prose-blockquote:rounded-r-lg prose-blockquote:italic prose-blockquote:text-foreground/80 prose-blockquote:my-8 prose-blockquote:not-italic prose-blockquote:text-base prose-blockquote:leading-relaxed
                 prose-ul:list-disc prose-ul:pl-6 prose-ul:my-6
                 prose-ol:list-decimal prose-ol:pl-6 prose-ol:my-6
                 prose-li:text-foreground prose-li:leading-relaxed
-                prose-img:rounded-lg prose-img:my-8"
+                prose-img:rounded-lg prose-img:my-8
+                prose-hr:my-10 prose-hr:border-border prose-hr:border-t-2"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
           </div>

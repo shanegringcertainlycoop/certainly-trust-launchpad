@@ -2,12 +2,18 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { useBlogPosts } from '@/hooks/useBlogPosts';
 import { format } from 'date-fns';
+import { SEO } from '@/components/SEO';
 
 const Blog = () => {
   const { data: posts, isLoading } = useBlogPosts(true);
 
   return (
     <div className="min-h-screen bg-cream">
+      <SEO
+        title="Blog"
+        description="Insights and perspectives on building trust, credentials, digital branding, and content strategy from Certainly Cooperative."
+        path="/blog"
+      />
       {/* Header */}
       <header className="py-6 border-b border-border">
         <div className="container mx-auto px-6">

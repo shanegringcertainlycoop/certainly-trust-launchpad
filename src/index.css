@@ -99,6 +99,36 @@
   margin-top: 1.5em;
 }
 
+/* Dispatch source attribution links */
+.dispatch-content .source-link {
+  margin-top: 0.25rem !important;
+  margin-bottom: 2rem !important;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+}
+
+.dispatch-content .source-link a {
+  color: hsl(var(--primary));
+  text-decoration: none;
+  font-weight: 500;
+  opacity: 0.8;
+  transition: opacity 0.15s;
+}
+
+.dispatch-content .source-link a:hover {
+  opacity: 1;
+}
+
+/* Dispatch blockquote intro styling */
+.dispatch-content blockquote {
+  font-style: normal !important;
+  font-size: 1.05rem;
+}
+
+.dispatch-content blockquote p {
+  margin: 0 !important;
+}
+
 /* Hide Lovable badge */
 #lovable-badge {
   display: none !important;

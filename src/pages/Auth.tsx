@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { SEO } from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -76,6 +77,12 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen bg-cream">
+      <SEO
+        title="Sign In"
+        description="Sign in to the Certainly Cooperative admin dashboard."
+        path="/auth"
+        noindex
+      />
       <header className="py-6 border-b border-border">
         <div className="container mx-auto px-6">
           <Link 
