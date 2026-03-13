@@ -31,7 +31,7 @@ try {
 const CLIENT_ID = process.env.LINKEDIN_CLIENT_ID;
 const CLIENT_SECRET = process.env.LINKEDIN_CLIENT_SECRET;
 const REDIRECT_URI = "http://localhost:3000/callback";
-const SCOPES = "openid w_member_social";
+const SCOPES = "openid profile w_member_social";
 
 if (!CLIENT_ID || !CLIENT_SECRET) {
   console.error(
@@ -117,27 +117,63 @@ const server = createServer(async (req, res) => {
   const accessToken = tokenData.access_token;
   const expiresIn = tokenData.expires_in;
 
+  // Fetch person ID via /v2/me
+  console.log("Fetching LinkedIn person ID...");
+  let personId = "";
+
+  // Try /v2/me first
+  const meRes = await fetch("https://api.linkedin.com/v2/me", {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+  if (meRes.ok) {
+    const me = (await meRes.json()) as { id: string; localizedFirstName?: string };
+    personId = me.id;
+    console.log(`Authenticated as: ${me.localizedFirstName || personId} (ID: ${personId})`);
+  }
+
+  // Fallback: try userinfo (requires openid scope)
+  if (!personId) {
+    const userinfoRes = await fetch("https://api.linkedin.com/v2/userinfo", {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    if (userinfoRes.ok) {
+      const userinfo = (await userinfoRes.json()) as { sub: string };
+      personId = userinfo.sub;
+      console.log(`Person ID from userinfo: ${personId}`);
+    }
+  }
+
+  if (!personId) {
+    console.warn("\nCould not fetch person ID automatically.");
+    console.warn("You'll need to set LINKEDIN_PERSON_ID manually in .env");
+    console.warn("Try: curl -H 'Authorization: Bearer TOKEN' https://api.linkedin.com/v2/me");
+  }
+
   // Save to .env
   let envContent = "";
   try {
     envContent = readFileSync(envPath, "utf-8");
   } catch {}
 
-  // Remove old token if present
+  // Remove old values if present
   envContent = envContent.replace(/^LINKEDIN_ACCESS_TOKEN=.*\n?/m, "");
-  // Append new token
+  envContent = envContent.replace(/^LINKEDIN_PERSON_ID=.*\n?/m, "");
+  // Append new values
   envContent =
     envContent.trimEnd() + `\nLINKEDIN_ACCESS_TOKEN="${accessToken}"\n`;
+  if (personId) {
+    envContent += `LINKEDIN_PERSON_ID="${personId}"\n`;
+  }
   writeFileSync(envPath, envContent);
 
   const expiryDate = new Date(Date.now() + expiresIn * 1000);
 
   res.writeHead(200, { "Content-Type": "text/html" });
   res.end(
-    `<h1>LinkedIn authorized!</h1><p>Access token saved to .env</p><p>Expires: ${expiryDate.toLocaleDateString()}</p><p>You can close this tab.</p>`
+    `<h1>LinkedIn authorized!</h1><p>Access token saved to .env</p><p>Person ID: ${personId || "not available"}</p><p>Expires: ${expiryDate.toLocaleDateString()}</p><p>You can close this tab.</p>`
   );
 
-  console.log(`\nAccess token saved to .env`);
+  console.log(`\nAccess token and person ID saved to .env`);
   console.log(`Expires: ${expiryDate.toLocaleDateString()}`);
   console.log(`(${Math.round(expiresIn / 86400)} days)`);
 
