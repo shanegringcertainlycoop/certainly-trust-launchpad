@@ -3,6 +3,7 @@ import { ArrowLeft } from 'lucide-react';
 import { useBlogPosts } from '@/hooks/useBlogPosts';
 import { format } from 'date-fns';
 import { SEO } from '@/components/SEO';
+import { getDispatchImage, isDispatch } from '@/lib/dispatch-images';
 
 const Blog = () => {
   const { data: posts, isLoading } = useBlogPosts(true);
@@ -61,10 +62,10 @@ const Blog = () => {
                   to={`/blog/${post.slug}`}
                   className="group"
                 >
-                  {post.featured_image && (
+                  {(post.featured_image || isDispatch(post.tags)) && (
                     <div className="aspect-video overflow-hidden rounded-lg mb-4">
                       <img 
-                        src={post.featured_image} 
+                        src={post.featured_image || getDispatchImage(post.slug)} 
                         alt={post.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />

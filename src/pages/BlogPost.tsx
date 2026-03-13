@@ -4,6 +4,7 @@ import { useBlogPost } from '@/hooks/useBlogPosts';
 import { format } from 'date-fns';
 import { SEO } from '@/components/SEO';
 import { BlogPostSchema } from '@/components/StructuredData';
+import { getDispatchImage, isDispatch } from '@/lib/dispatch-images';
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -95,11 +96,11 @@ const BlogPost = () => {
       </header>
 
       {/* Featured Image */}
-      {post.featured_image && (
+      {(post.featured_image || isDispatch(post.tags)) && (
         <div className="container mx-auto px-6 pt-8">
           <div className="max-w-3xl mx-auto">
             <img 
-              src={post.featured_image} 
+              src={post.featured_image || getDispatchImage(post.slug)} 
               alt={post.title}
               className="w-full h-auto rounded-lg object-contain"
             />
