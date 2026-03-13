@@ -1,6 +1,20 @@
 import { createClient } from "@supabase/supabase-js";
-import { readFileSync, writeFileSync, mkdirSync } from "fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
 import { resolve } from "path";
+
+// Load .env.production if env vars aren't already set (e.g. Lovable build)
+function loadEnvFile() {
+  const envPath = resolve(process.cwd(), ".env.production");
+  if (!existsSync(envPath)) return;
+  const lines = readFileSync(envPath, "utf-8").split("\n");
+  for (const line of lines) {
+    const match = line.match(/^(\w+)=["']?(.+?)["']?\s*$/);
+    if (match && !process.env[match[1]]) {
+      process.env[match[1]] = match[2];
+    }
+  }
+}
+loadEnvFile();
 
 const SITE_URL = "https://certainly.coop";
 const DEFAULT_OG_IMAGE = `${SITE_URL}/images/dispatch-og.jpg`;
