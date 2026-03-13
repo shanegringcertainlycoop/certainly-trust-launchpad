@@ -4,6 +4,7 @@ import { useBlogPost } from '@/hooks/useBlogPosts';
 import { format } from 'date-fns';
 import { SEO } from '@/components/SEO';
 import { BlogPostSchema } from '@/components/StructuredData';
+import { getDispatchImage, isDispatch } from '@/lib/dispatch-images';
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
