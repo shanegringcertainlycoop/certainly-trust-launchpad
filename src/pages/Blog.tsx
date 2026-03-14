@@ -54,9 +54,12 @@ const Blog = () => {
                 >
                   {(post.featured_image || isDispatch(post.tags)) && (
                     <div className="aspect-video overflow-hidden rounded-lg mb-4">
-                      <img 
-                        src={post.featured_image || getDispatchImage(post.slug)} 
+                      <img
+                        src={post.featured_image || getDispatchImage(post.slug)}
                         alt={post.title}
+                        width={400}
+                        height={225}
+                        loading="lazy"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>

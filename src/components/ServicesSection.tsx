@@ -98,7 +98,7 @@ export const ServicesSection = () => {
                       <p className="text-xs text-foreground/60 font-medium mb-2">Trusted by:</p>
                       <div className="flex items-center gap-3 flex-wrap my-[14px]">
                         {service.trustedBy.map((client, idx) => <div key={idx} className="h-8 flex items-center">
-                            <img src={client.logo} alt={client.name} className="h-full w-auto object-contain opacity-60 transition-opacity" />
+                            <img src={client.logo} alt={client.name} width={80} height={32} loading="lazy" className="h-full w-auto object-contain opacity-60 transition-opacity" />
                           </div>)}
                       </div>
                     </div>
@@ -133,7 +133,7 @@ export const ServicesSection = () => {
                       <p className="text-xs text-foreground/60 font-medium mb-2">Trusted by:</p>
                       <div className="flex items-center gap-3 flex-wrap">
                         {service.trustedBy.map((client, idx) => <div key={idx} className="h-8 flex items-center">
-                            <img src={client.logo} alt={client.name} className="h-full w-auto object-contain opacity-60 transition-opacity" />
+                            <img src={client.logo} alt={client.name} width={80} height={32} loading="lazy" className="h-full w-auto object-contain opacity-60 transition-opacity" />
                           </div>)}
                       </div>
                     </div>

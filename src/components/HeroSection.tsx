@@ -13,9 +13,11 @@ export const HeroSection = () => {
       <div className="max-w-4xl mx-auto w-full text-center">
         <div className="space-y-6">
           <div className="mb-12">
-            <img 
-              src={certainlyLogo} 
-              alt="Certainly" 
+            <img
+              src={certainlyLogo}
+              alt="Certainly"
+              width={200}
+              height={64}
               className="h-12 md:h-16 w-auto mx-auto"
             />
           </div>

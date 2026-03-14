@@ -72,6 +72,8 @@ const BlogPost = () => {
             <img
               src={post.featured_image || getDispatchImage(post.slug)}
               alt={post.title}
+              width={768}
+              height={432}
               className="w-full h-auto rounded-lg object-contain"
             />
           </div>

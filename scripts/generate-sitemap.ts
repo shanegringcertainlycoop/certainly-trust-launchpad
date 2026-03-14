@@ -40,15 +40,16 @@ async function generateSitemap() {
     process.exit(1);
   }
 
+  const today = new Date().toISOString().split("T")[0];
   const staticPages = [
-    { loc: "/", changefreq: "weekly", priority: "1.0" },
-    { loc: "/services", changefreq: "monthly", priority: "0.9" },
-    { loc: "/services/marketing", changefreq: "monthly", priority: "0.8" },
-    { loc: "/services/operations", changefreq: "monthly", priority: "0.8" },
-    { loc: "/services/technology", changefreq: "monthly", priority: "0.8" },
-    { loc: "/about", changefreq: "monthly", priority: "0.7" },
-    { loc: "/contact", changefreq: "monthly", priority: "0.7" },
-    { loc: "/blog", changefreq: "daily", priority: "0.8" },
+    { loc: "/", lastmod: today, changefreq: "weekly", priority: "1.0" },
+    { loc: "/services", lastmod: today, changefreq: "monthly", priority: "0.9" },
+    { loc: "/services/marketing", lastmod: today, changefreq: "monthly", priority: "0.8" },
+    { loc: "/services/operations", lastmod: today, changefreq: "monthly", priority: "0.8" },
+    { loc: "/services/technology", lastmod: today, changefreq: "monthly", priority: "0.8" },
+    { loc: "/about", lastmod: today, changefreq: "monthly", priority: "0.7" },
+    { loc: "/contact", lastmod: today, changefreq: "monthly", priority: "0.7" },
+    { loc: "/blog", lastmod: today, changefreq: "daily", priority: "0.8" },
   ];
 
   const blogPages = (posts || []).map((post) => ({

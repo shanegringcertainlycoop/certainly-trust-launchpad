@@ -37,7 +37,7 @@ export const Header = () => {
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <img src={certainlyLogo} alt="Certainly" className="h-8 w-auto" />
+            <img src={certainlyLogo} alt="Certainly" width={100} height={32} className="h-8 w-auto" />
           </Link>
 
           {/* Desktop Nav */}
