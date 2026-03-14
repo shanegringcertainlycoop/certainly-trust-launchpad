@@ -5,10 +5,23 @@ import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { PartnershipDialog } from "@/components/PartnershipDialog";
+import { ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/StructuredData";
 
 interface Stat {
   value: string;
   label: string;
+}
+
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface CaseStudy {
+  client: string;
+  challenge: string;
+  approach: string;
+  results: string[];
 }
 
 interface ServicePageProps {
@@ -24,6 +37,13 @@ interface ServicePageProps {
     items?: string[];
   }[];
   stats?: Stat[];
+  methodology?: {
+    heading: string;
+    body: string;
+    steps: string[];
+  };
+  caseStudy?: CaseStudy;
+  faq?: FAQItem[];
   testimonial?: {
     quote: string;
     name: string;
@@ -44,6 +64,9 @@ export const ServicePageLayout = ({
   path,
   sections,
   stats,
+  methodology,
+  caseStudy,
+  faq,
   testimonial,
   relatedServices,
 }: ServicePageProps) => {
@@ -52,6 +75,19 @@ export const ServicePageLayout = ({
   return (
     <div className="min-h-screen bg-cream">
       <SEO title={seoTitle} description={seoDescription} path={path} />
+      <ServiceSchema
+        name={title}
+        description={seoDescription}
+        url={`https://certainly.coop${path}`}
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://certainly.coop" },
+          { name: "Services", url: "https://certainly.coop/services" },
+          { name: title, url: `https://certainly.coop${path}` },
+        ]}
+      />
+      {faq && faq.length > 0 && <FAQSchema items={faq} />}
       <PartnershipDialog
         open={partnershipOpen}
         onOpenChange={setPartnershipOpen}
@@ -129,6 +165,69 @@ export const ServicePageLayout = ({
         </div>
       </section>
 
+      {/* Methodology */}
+      {methodology && (
+        <section className="py-16 md:py-24 bg-light-gray">
+          <div className="max-w-7xl mx-auto px-6 md:px-12">
+            <div className="max-w-3xl">
+              <h2 className="text-2xl md:text-3xl font-serif font-bold text-near-black mb-4">
+                {methodology.heading}
+              </h2>
+              <p className="text-foreground/70 leading-relaxed mb-6">
+                {methodology.body}
+              </p>
+              <ol className="space-y-4">
+                {methodology.steps.map((step, i) => (
+                  <li key={i} className="flex items-start text-foreground/70">
+                    <span className="flex-shrink-0 w-7 h-7 rounded-full bg-forest-green text-white text-sm font-semibold flex items-center justify-center mr-3 mt-0.5">
+                      {i + 1}
+                    </span>
+                    {step}
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Case Study */}
+      {caseStudy && (
+        <section className="py-16 md:py-24">
+          <div className="max-w-7xl mx-auto px-6 md:px-12">
+            <div className="max-w-3xl">
+              <p className="text-sm uppercase tracking-widest text-foreground/50 mb-2">
+                Case Study
+              </p>
+              <h2 className="text-2xl md:text-3xl font-serif font-bold text-near-black mb-6">
+                {caseStudy.client}
+              </h2>
+              <div className="space-y-4 text-foreground/70 leading-relaxed">
+                <p>
+                  <span className="font-semibold text-near-black">Challenge: </span>
+                  {caseStudy.challenge}
+                </p>
+                <p>
+                  <span className="font-semibold text-near-black">Approach: </span>
+                  {caseStudy.approach}
+                </p>
+                <div>
+                  <span className="font-semibold text-near-black">Results:</span>
+                  <ul className="mt-2 space-y-1">
+                    {caseStudy.results.map((result, i) => (
+                      <li key={i} className="flex items-start">
+                        <span className="text-forest-green mr-2">&#x2713;</span>
+                        {result}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Testimonial */}
       {testimonial && (
         <section className="py-16 md:py-24 bg-light-gray">
@@ -164,6 +263,31 @@ export const ServicePageLayout = ({
           </Button>
         </div>
       </section>
+
+      {/* FAQ */}
+      {faq && faq.length > 0 && (
+        <section className="py-16 md:py-24">
+          <div className="max-w-7xl mx-auto px-6 md:px-12">
+            <div className="max-w-3xl">
+              <h2 className="text-2xl md:text-3xl font-serif font-bold text-near-black mb-8">
+                Frequently asked questions
+              </h2>
+              <div className="space-y-6">
+                {faq.map((item, i) => (
+                  <div key={i} className="border-b border-border pb-6">
+                    <h3 className="text-lg font-semibold text-near-black mb-2">
+                      {item.question}
+                    </h3>
+                    <p className="text-foreground/70 leading-relaxed">
+                      {item.answer}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Related Services */}
       <section className="py-12 border-t border-border">

@@ -271,6 +271,18 @@ async function prerenderMeta() {
       description: "Connect with Certainly Cooperative. Tell us about your certification program and we'll share how we can help with marketing, operations, or technology.",
       jsonLd: orgSchema,
     },
+    {
+      path: "privacy",
+      title: "Privacy Policy",
+      description: "Privacy policy for Certainly Cooperative. How we collect, use, and protect your personal information.",
+      jsonLd: orgSchema,
+    },
+    {
+      path: "terms",
+      title: "Terms of Use",
+      description: "Terms of use for the Certainly Cooperative website. Rules governing your use of certainly.coop.",
+      jsonLd: orgSchema,
+    },
   ];
 
   let staticCount = 0;

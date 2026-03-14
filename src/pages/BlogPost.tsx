@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { SEO } from '@/components/SEO';
-import { BlogPostSchema } from '@/components/StructuredData';
+import { BlogPostSchema, BreadcrumbSchema } from '@/components/StructuredData';
 import { getDispatchImage, isDispatch } from '@/lib/dispatch-images';
 
 const BlogPost = () => {
@@ -61,6 +61,13 @@ const BlogPost = () => {
         publishedAt={post.published_at}
         updatedAt={post.updated_at}
         featuredImage={post.featured_image}
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://certainly.coop" },
+          { name: "Blog", url: "https://certainly.coop/blog" },
+          { name: post.title, url: `https://certainly.coop/blog/${post.slug}` },
+        ]}
       />
 
       <Header />

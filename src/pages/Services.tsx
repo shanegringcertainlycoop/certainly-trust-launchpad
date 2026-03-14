@@ -6,6 +6,7 @@ import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { PartnershipDialog } from "@/components/PartnershipDialog";
+import { BreadcrumbSchema } from "@/components/StructuredData";
 
 const services = [
   {
@@ -43,6 +44,29 @@ const services = [
   },
 ];
 
+const differentiators = [
+  {
+    title: "Built by certification insiders",
+    description:
+      "Our team includes former IWBI and USGBC staff who've managed certification programs from the inside. We don't just understand the industry — we've shaped it.",
+  },
+  {
+    title: "Integrated across disciplines",
+    description:
+      "Marketing, operations, and technology are not separate problems. We work across all three so your brand, systems, and digital presence reinforce each other.",
+  },
+  {
+    title: "Cooperative structure, aligned incentives",
+    description:
+      "As a cooperative, we don't answer to investors or chase billable hours. Our structure means we're aligned with your outcomes, not our margins.",
+  },
+  {
+    title: "Proven with industry leaders",
+    description:
+      "We've worked with IWBI, Delos, CodeGreen, DRVN, ECA, Pinchin, 1% for the Planet, and other organizations building trust through certification.",
+  },
+];
+
 const Services = () => {
   const [partnershipOpen, setPartnershipOpen] = useState(false);
 
@@ -52,6 +76,12 @@ const Services = () => {
         title="Services"
         description="Marketing, operations, and technology services for certification brands. We help certification bodies grow their programs and modernize their digital presence."
         path="/services"
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://certainly.coop" },
+          { name: "Services", url: "https://certainly.coop/services" },
+        ]}
       />
       <PartnershipDialog open={partnershipOpen} onOpenChange={setPartnershipOpen} />
       <Header />
@@ -71,8 +101,25 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Service Cards */}
+      {/* Intro */}
       <section className="py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <div className="max-w-3xl space-y-4 text-foreground/70 leading-relaxed">
+            <p>
+              Certification organizations face a unique challenge: they need to build trust at every level — with candidates, employers, regulators, and the public — while running complex operations and competing for attention in crowded markets. Most agencies don't understand this. We do, because we've been on the inside.
+            </p>
+            <p>
+              Our team has managed marketing campaigns, designed operational systems, and built digital platforms for some of the most recognized certification brands in the world. We bring that experience to every engagement, whether you're launching a new credential or scaling a program with thousands of certified professionals.
+            </p>
+            <p>
+              We offer three integrated service lines — marketing, operations, and technology — because we've seen how these functions depend on each other. A great website can't compensate for a broken enrollment process. A strong brand can't survive weak governance. We help you get all three right.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Service Cards */}
+      <section className="py-16 md:py-24 bg-light-gray">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="grid md:grid-cols-3 gap-8">
             {services.map((service) => (
@@ -102,6 +149,23 @@ const Services = () => {
                   </Link>
                 </CardContent>
               </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Certainly */}
+      <section className="py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <h2 className="text-3xl md:text-4xl font-serif font-bold text-near-black mb-12">
+            Why certification brands choose Certainly
+          </h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            {differentiators.map((d) => (
+              <div key={d.title} className="space-y-2">
+                <h3 className="text-lg font-semibold text-near-black">{d.title}</h3>
+                <p className="text-foreground/70 leading-relaxed">{d.description}</p>
+              </div>
             ))}
           </div>
         </div>

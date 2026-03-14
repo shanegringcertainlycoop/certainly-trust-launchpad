@@ -50,6 +50,8 @@ async function generateSitemap() {
     { loc: "/about", lastmod: today, changefreq: "monthly", priority: "0.7" },
     { loc: "/contact", lastmod: today, changefreq: "monthly", priority: "0.7" },
     { loc: "/blog", lastmod: today, changefreq: "daily", priority: "0.8" },
+    { loc: "/privacy", lastmod: today, changefreq: "yearly", priority: "0.3" },
+    { loc: "/terms", lastmod: today, changefreq: "yearly", priority: "0.3" },
   ];
 
   const blogPages = (posts || []).map((post) => ({

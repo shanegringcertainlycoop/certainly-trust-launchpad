@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
@@ -136,24 +137,24 @@ export const Footer = () => {
         <div className="pt-8 border-t border-primary-foreground/20 animate-fade-in" style={{ animationDelay: "0.2s" }}>
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-primary-foreground/70">
             <p className="order-2 sm:order-1">
-              © 2025 Certainly Cooperative
+              © {new Date().getFullYear()} Certainly Cooperative
             </p>
             <div className="flex items-center gap-1 order-1 sm:order-2">
-              <a 
-                href="#" 
+              <Link
+                to="/privacy"
                 className="px-3 py-1 hover:text-primary-foreground transition-colors relative group"
               >
                 Privacy Policy
                 <span className="absolute bottom-0 left-3 right-3 h-px bg-primary-foreground scale-x-0 group-hover:scale-x-100 transition-transform" />
-              </a>
+              </Link>
               <span className="text-primary-foreground/40">•</span>
-              <a 
-                href="#" 
+              <Link
+                to="/terms"
                 className="px-3 py-1 hover:text-primary-foreground transition-colors relative group"
               >
                 Terms of Use
                 <span className="absolute bottom-0 left-3 right-3 h-px bg-primary-foreground scale-x-0 group-hover:scale-x-100 transition-transform" />
-              </a>
+              </Link>
             </div>
           </div>
         </div>

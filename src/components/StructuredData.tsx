@@ -92,6 +92,32 @@ export const BreadcrumbSchema = ({ items }: { items: BreadcrumbItem[] }) => {
   );
 };
 
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+export const FAQSchema = ({ items }: { items: FAQItem[] }) => {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+
+  return (
+    <Helmet>
+      <script type="application/ld+json">{JSON.stringify(schema)}</script>
+    </Helmet>
+  );
+};
+
 interface BlogPostSchemaProps {
   title: string;
   description: string;
