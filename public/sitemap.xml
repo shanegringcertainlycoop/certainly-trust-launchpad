@@ -61,8 +61,32 @@
     <priority>0.3</priority>
   </url>
   <url>
+    <loc>https://certainly.coop/blog/what-is-certification-marketing</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://certainly.coop/blog/how-to-prepare-for-ncca-accreditation</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://certainly.coop/blog/certification-dispatch-2026-03-13</loc>
     <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://certainly.coop/blog/digital-badge-strategy-certification-programs</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://certainly.coop/blog/building-candidate-pipeline-certification-program</loc>
+    <lastmod>2026-03-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
