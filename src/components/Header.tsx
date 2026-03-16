@@ -28,7 +28,6 @@ const navItems = [
   },
   { label: "Blog", href: "/blog" },
   { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
 ];
 
 export const Header = () => {
@@ -108,7 +107,7 @@ export const Header = () => {
               size="sm"
               onClick={() => setPartnershipOpen(true)}
             >
-              Explore a Partnership
+              Contact Us
             </Button>
           </nav>
 
@@ -164,7 +163,7 @@ export const Header = () => {
                     setPartnershipOpen(true);
                   }}
                 >
-                  Explore a Partnership
+                  Contact Us
                 </Button>
               </div>
             </nav>

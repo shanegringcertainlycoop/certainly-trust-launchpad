@@ -65,7 +65,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     const emailResponse = await resend.emails.send({
-      from: "Certainly Cooperative <onboarding@resend.dev>",
+      from: "Certainly Cooperative <notifications@certainly.coop>",
       to: [NOTIFICATION_EMAIL],
       subject: subject,
       html: emailHtml,

@@ -8,7 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
 
-const partnershipSchema = z.object({
+const contactSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
   email: z.string().trim().email("Invalid email address").max(255),
   company: z.string().trim().max(100).optional(),
@@ -33,11 +33,8 @@ export const PartnershipDialog = ({ open, onOpenChange, serviceName }: Partnersh
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Partnership form submitted", formData);
-    
-    const validation = partnershipSchema.safeParse(formData);
-    console.log("Validation result:", validation);
-    
+
+    const validation = contactSchema.safeParse(formData);
     if (!validation.success) {
       toast({
         title: "Validation Error",
@@ -48,10 +45,8 @@ export const PartnershipDialog = ({ open, onOpenChange, serviceName }: Partnersh
     }
 
     setIsSubmitting(true);
-    console.log("Starting submission...");
 
     try {
-      console.log("Inserting into database...");
       const { error } = await supabase.from("partnership_inquiries").insert({
         name: formData.name,
         email: formData.email,
@@ -62,10 +57,8 @@ export const PartnershipDialog = ({ open, onOpenChange, serviceName }: Partnersh
 
       if (error) throw error;
 
-      // Send notification email
-      try {
-        console.log("Sending partnership notification...");
-        const notificationResult = await supabase.functions.invoke("send-notification", {
+      supabase.functions
+        .invoke("send-notification", {
           body: {
             type: "partnership_inquiry",
             data: {
@@ -76,20 +69,12 @@ export const PartnershipDialog = ({ open, onOpenChange, serviceName }: Partnersh
               service: serviceName,
             },
           },
-        });
-        
-        if (notificationResult.error) {
-          console.error("Notification error:", notificationResult.error);
-        } else {
-          console.log("Notification sent successfully");
-        }
-      } catch (notifError) {
-        console.error("Failed to send notification:", notifError);
-      }
+        })
+        .catch((err) => console.error("Failed to send notification:", err));
 
       toast({
         title: "Thank you!",
-        description: "We've received your inquiry and will be in touch soon.",
+        description: "We've received your message and will be in touch soon.",
       });
 
       setFormData({ name: "", email: "", company: "", message: "" });
@@ -110,7 +95,7 @@ export const PartnershipDialog = ({ open, onOpenChange, serviceName }: Partnersh
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>Explore a Partnership</DialogTitle>
+          <DialogTitle>Get in Touch</DialogTitle>
           <DialogDescription>
             {serviceName ? `Interested in ${serviceName}? ` : ""}
             Tell us about your needs and we'll get back to you.
@@ -118,9 +103,9 @@ export const PartnershipDialog = ({ open, onOpenChange, serviceName }: Partnersh
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Name *</Label>
+            <Label htmlFor="dialog-name">Name *</Label>
             <Input
-              id="name"
+              id="dialog-name"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               placeholder="Your name"
@@ -129,9 +114,9 @@ export const PartnershipDialog = ({ open, onOpenChange, serviceName }: Partnersh
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="email">Email *</Label>
+            <Label htmlFor="dialog-email">Email *</Label>
             <Input
-              id="email"
+              id="dialog-email"
               type="email"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -141,22 +126,22 @@ export const PartnershipDialog = ({ open, onOpenChange, serviceName }: Partnersh
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="company">Company</Label>
+            <Label htmlFor="dialog-company">Company</Label>
             <Input
-              id="company"
+              id="dialog-company"
               value={formData.company}
               onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-              placeholder="Your company (optional)"
+              placeholder="Your organization (optional)"
               maxLength={100}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="message">Message *</Label>
+            <Label htmlFor="dialog-message">How can we help? *</Label>
             <Textarea
-              id="message"
+              id="dialog-message"
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              placeholder="Tell us about your project..."
+              placeholder="Tell us about your certification program and what you're looking for..."
               required
               maxLength={1000}
               rows={4}
@@ -167,7 +152,7 @@ export const PartnershipDialog = ({ open, onOpenChange, serviceName }: Partnersh
               Cancel
             </Button>
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Sending..." : "Send Inquiry"}
+              {isSubmitting ? "Sending..." : "Send Message"}
             </Button>
           </div>
         </form>

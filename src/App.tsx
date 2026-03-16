@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 
 // Eager: homepage (most common entry point)
@@ -15,7 +15,6 @@ const ServiceMarketing = lazy(() => import("./pages/ServiceMarketing"));
 const ServiceOperations = lazy(() => import("./pages/ServiceOperations"));
 const ServiceTechnology = lazy(() => import("./pages/ServiceTechnology"));
 const About = lazy(() => import("./pages/About"));
-const Contact = lazy(() => import("./pages/Contact"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Blog = lazy(() => import("./pages/Blog"));
@@ -50,7 +49,7 @@ const App = () => (
               <Route path="/for/new-certification" element={<ForNewCertification />} />
               <Route path="/for/service-providers" element={<ForServiceProviders />} />
               <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
+              <Route path="/contact" element={<Navigate to="/" replace />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/blog" element={<Blog />} />
