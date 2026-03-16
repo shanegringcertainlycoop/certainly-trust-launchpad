@@ -36,19 +36,21 @@ async function generateSitemap() {
     .order("published_at", { ascending: false });
 
   if (error) {
-    console.error("Failed to fetch blog posts:", error.message);
-    process.exit(1);
+    console.warn("Failed to fetch blog posts:", error.message, "— continuing without blog URLs");
   }
 
   const today = new Date().toISOString().split("T")[0];
   const staticPages = [
     { loc: "/", lastmod: today, changefreq: "weekly", priority: "1.0" },
+    { loc: "/programs", lastmod: today, changefreq: "monthly", priority: "0.9" },
     { loc: "/services", lastmod: today, changefreq: "monthly", priority: "0.9" },
     { loc: "/services/marketing", lastmod: today, changefreq: "monthly", priority: "0.8" },
     { loc: "/services/operations", lastmod: today, changefreq: "monthly", priority: "0.8" },
     { loc: "/services/technology", lastmod: today, changefreq: "monthly", priority: "0.8" },
+    { loc: "/for/certification-orgs", lastmod: today, changefreq: "monthly", priority: "0.8" },
+    { loc: "/for/new-certification", lastmod: today, changefreq: "monthly", priority: "0.8" },
+    { loc: "/for/service-providers", lastmod: today, changefreq: "monthly", priority: "0.8" },
     { loc: "/about", lastmod: today, changefreq: "monthly", priority: "0.7" },
-    { loc: "/contact", lastmod: today, changefreq: "monthly", priority: "0.7" },
     { loc: "/blog", lastmod: today, changefreq: "daily", priority: "0.8" },
     { loc: "/privacy", lastmod: today, changefreq: "yearly", priority: "0.3" },
     { loc: "/terms", lastmod: today, changefreq: "yearly", priority: "0.3" },

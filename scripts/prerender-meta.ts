@@ -151,18 +151,16 @@ async function prerenderMeta() {
     .order("published_at", { ascending: false });
 
   if (error) {
-    console.error("Failed to fetch blog posts:", error.message);
-    process.exit(1);
+    console.warn("Failed to fetch blog posts:", error.message, "— continuing without blog posts");
   }
 
   if (!posts || posts.length === 0) {
-    console.log("No published posts — nothing to prerender");
-    return;
+    console.log("No published posts — skipping blog prerender");
   }
 
   // Generate per-post HTML files
   let count = 0;
-  for (const post of posts) {
+  for (const post of (posts || [])) {
     const ogImage = post.featured_image
       || (isDispatch(post.tags) ? `${SITE_URL}${getDispatchImage(post.slug)}` : undefined);
     const description = post.excerpt || "";
@@ -266,9 +264,27 @@ async function prerenderMeta() {
       jsonLd: orgSchema,
     },
     {
-      path: "contact",
-      title: "Contact",
-      description: "Connect with Certainly Cooperative. Tell us about your certification program and we'll share how we can help with marketing, operations, or technology.",
+      path: "programs",
+      title: "Programs",
+      description: "Productized programs from Certainly Cooperative: Create Your Own Credential, Digital Brand Build, and Trust-Multiplying Content.",
+      jsonLd: orgSchema,
+    },
+    {
+      path: "for/certification-orgs",
+      title: "For Certification Organizations",
+      description: "Marketing, technology, and operations support for existing certification bodies looking to grow their programs and modernize their digital presence.",
+      jsonLd: orgSchema,
+    },
+    {
+      path: "for/new-certification",
+      title: "For Organizations Launching a Certification",
+      description: "End-to-end support for organizations building their first certification program — from credential architecture to go-to-market strategy.",
+      jsonLd: orgSchema,
+    },
+    {
+      path: "for/service-providers",
+      title: "For Service Providers to Certifications",
+      description: "Marketing, positioning, and growth strategy for verifiers, education providers, exam proctors, and other certification ecosystem partners.",
       jsonLd: orgSchema,
     },
     {
