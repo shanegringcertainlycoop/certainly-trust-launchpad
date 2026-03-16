@@ -23,6 +23,9 @@ const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Auth = lazy(() => import("./pages/Auth"));
 const Admin = lazy(() => import("./pages/Admin"));
 const AdminPostEditor = lazy(() => import("./pages/AdminPostEditor"));
+const ForCertificationOrgs = lazy(() => import("./pages/ForCertificationOrgs"));
+const ForNewCertification = lazy(() => import("./pages/ForNewCertification"));
+const ForServiceProviders = lazy(() => import("./pages/ForServiceProviders"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -41,6 +44,9 @@ const App = () => (
               <Route path="/services/marketing" element={<ServiceMarketing />} />
               <Route path="/services/operations" element={<ServiceOperations />} />
               <Route path="/services/technology" element={<ServiceTechnology />} />
+              <Route path="/for/certification-orgs" element={<ForCertificationOrgs />} />
+              <Route path="/for/new-certification" element={<ForNewCertification />} />
+              <Route path="/for/service-providers" element={<ForServiceProviders />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/privacy" element={<Privacy />} />

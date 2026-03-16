@@ -8,6 +8,15 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   {
+    label: "Who We Serve",
+    href: "/for",
+    children: [
+      { label: "Certification Organizations", href: "/for/certification-orgs" },
+      { label: "Launching a Certification", href: "/for/new-certification" },
+      { label: "Service Providers", href: "/for/service-providers" },
+    ],
+  },
+  {
     label: "Services",
     href: "/services",
     children: [
@@ -24,7 +33,7 @@ const navItems = [
 export const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [partnershipOpen, setPartnershipOpen] = useState(false);
-  const [servicesHover, setServicesHover] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const location = useLocation();
 
   const isActive = (href: string) =>
@@ -47,8 +56,8 @@ export const Header = () => {
                 <div
                   key={item.href}
                   className="relative"
-                  onMouseEnter={() => setServicesHover(true)}
-                  onMouseLeave={() => setServicesHover(false)}
+                  onMouseEnter={() => setOpenDropdown(item.href)}
+                  onMouseLeave={() => setOpenDropdown(null)}
                 >
                   <Link
                     to={item.href}
@@ -59,7 +68,7 @@ export const Header = () => {
                   >
                     {item.label}
                   </Link>
-                  {servicesHover && (
+                  {openDropdown === item.href && (
                     <div className="absolute top-full left-0 pt-2">
                       <div className="bg-white rounded-lg shadow-lg border border-border py-2 min-w-[180px]">
                         {item.children.map((child) => (
