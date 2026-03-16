@@ -158,7 +158,7 @@ export const AudiencePageLayout = ({
           <div className="grid md:grid-cols-3 gap-6">
             {relevantServices.map((svc) => (
               <Link
-                key={svc.href}
+                key={svc.title}
                 to={svc.href}
                 className="group block bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow border border-border/50"
               >

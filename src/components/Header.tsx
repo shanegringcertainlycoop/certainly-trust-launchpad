@@ -16,6 +16,7 @@ const navItems = [
       { label: "Service Providers", href: "/for/service-providers" },
     ],
   },
+  { label: "Programs", href: "/programs" },
   {
     label: "Services",
     href: "/services",

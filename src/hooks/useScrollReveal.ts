@@ -9,16 +9,17 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
     const el = ref.current;
     if (!el) return;
 
+    const revealChildren = () => {
+      el.querySelectorAll(".fade-in-up")
+        .forEach((child) => child.classList.add("visible"));
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Add visible to the container
             entry.target.classList.add("visible");
-            // Also add visible to any fade-in-up children
-            entry.target
-              .querySelectorAll(".fade-in-up")
-              .forEach((child) => child.classList.add("visible"));
+            revealChildren();
             observer.unobserve(entry.target);
           }
         });
@@ -27,7 +28,20 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
     );
 
     observer.observe(el);
-    return () => observer.disconnect();
+
+    // Watch for new .fade-in-up children added after the section
+    // is already visible (e.g. async data loading)
+    const mutationObserver = new MutationObserver(() => {
+      if (el.classList.contains("visible")) {
+        revealChildren();
+      }
+    });
+    mutationObserver.observe(el, { childList: true, subtree: true });
+
+    return () => {
+      observer.disconnect();
+      mutationObserver.disconnect();
+    };
   }, [threshold]);
 
   return ref;
