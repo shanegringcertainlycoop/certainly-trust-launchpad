@@ -11,10 +11,10 @@ export const Footer = () => {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
-  
+
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const validation = emailSchema.safeParse(email);
     if (!validation.success) {
       toast({
@@ -28,34 +28,32 @@ export const Footer = () => {
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase
-        .from("newsletter_subscriptions")
-        .insert({ email: validation.data });
+      // Subscribe via Beehiiv edge function
+      const { error: beehiivError } = await supabase.functions.invoke(
+        "beehiiv-subscribe",
+        { body: { email: validation.data } }
+      );
 
-      if (error) {
-        if (error.code === '23505') {
-          toast({
-            title: "Already subscribed",
-            description: "This email is already on our list!",
-          });
-        } else {
-          throw error;
-        }
-      } else {
-        // Send notification email (don't wait for it)
-        supabase.functions.invoke("send-notification", {
-          body: {
-            type: "newsletter_subscription",
-            data: { email: validation.data },
-          },
-        }).catch(err => console.error("Failed to send notification:", err));
-
-        toast({
-          title: "Thanks for subscribing!",
-          description: "You'll receive our next edition of Seeking Certainty soon."
-        });
-        setEmail("");
+      if (beehiivError) {
+        console.error("Beehiiv subscribe error:", beehiivError);
+        throw beehiivError;
       }
+
+      // Also save to Supabase as backup (fire-and-forget)
+      supabase
+        .from("newsletter_subscriptions")
+        .insert({ email: validation.data })
+        .then(({ error }) => {
+          if (error && error.code !== "23505") {
+            console.error("Supabase backup insert error:", error);
+          }
+        });
+
+      toast({
+        title: "Thanks for subscribing!",
+        description: "You'll receive our next edition of Seeking Certainty soon.",
+      });
+      setEmail("");
     } catch (error) {
       console.error("Error subscribing:", error);
       toast({
@@ -71,21 +69,21 @@ export const Footer = () => {
     <footer className="bg-forest-green text-primary-foreground py-16 px-6 md:px-12 overflow-hidden relative">
       {/* Decorative background element */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-primary-foreground/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-      
+
       <div className="max-w-7xl mx-auto relative">
         {/* Main Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16 mb-16">
-          
+
           {/* Column 1: Brand */}
           <div className="lg:col-span-1 animate-fade-in">
             <h3 className="text-3xl md:text-4xl font-serif font-bold mb-4 hover-scale inline-block">
               Certainly Cooperative
             </h3>
             <div className="mt-6">
-              <a 
-                href="https://www.linkedin.com/company/certainlycoop" 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href="https://www.linkedin.com/company/certainlycoop"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-lg font-medium hover:text-accent transition-all duration-300 group"
                 aria-label="Follow us on LinkedIn"
               >
@@ -110,18 +108,18 @@ export const Footer = () => {
                 Periodic insights on credential strategy, trust marketing, and the future of authority online.
               </p>
               <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-xl">
-                <Input 
-                  type="email" 
-                  placeholder="your@email.com" 
-                  value={email} 
-                  onChange={e => setEmail(e.target.value)} 
+                <Input
+                  type="email"
+                  placeholder="your@email.com"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
                   className="flex-1 bg-background/20 border-primary-foreground/30 text-primary-foreground placeholder:text-primary-foreground/50 h-12 text-base focus:border-accent focus:ring-accent"
                   maxLength={255}
                   disabled={isSubmitting}
                 />
-                <Button 
-                  type="submit" 
-                  variant="secondary" 
+                <Button
+                  type="submit"
+                  variant="secondary"
                   size="lg"
                   className="whitespace-nowrap h-12 px-8 font-semibold hover-scale"
                   disabled={isSubmitting}
