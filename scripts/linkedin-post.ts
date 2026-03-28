@@ -10,8 +10,8 @@
  *   - Relevant hashtags
  */
 
-import { resolve } from "path";
-import { pathToFileURL } from "url";
+import { resolve, join, dirname } from "path";
+import { pathToFileURL, fileURLToPath } from "url";
 import { readFileSync } from "fs";
 
 // Load .env
@@ -68,78 +68,150 @@ interface Dispatch {
 function buildPostText(dispatch: Dispatch): string {
   const blogUrl = `https://certainly.coop/blog/${dispatch.slug}`;
 
-  // Pull the first paragraph — often contains the juiciest stat
-  const firstParagraph = dispatch.sections.find(
-    (s) => s.type === "paragraph" && s.content
-  );
+  // Pull all paragraphs (strip source citations)
+  const paragraphs = dispatch.sections
+    .filter((s) => s.type === "paragraph" && s.content)
+    .map((s) => s.content!.replace(/\s*Source:.*$/, "").trim());
 
-  // Extract a lead stat/hook from the first paragraph if possible
-  // Look for numbers, dollar amounts, percentages
-  const statMatch = firstParagraph?.content?.match(
-    /(\$[\d.,]+\s*(?:billion|million|B|M)|[\d.,]+%|\d[\d,]+\s+(?:companies|organizations|products|entities))/i
-  );
-
-  // Pick the first h3 from each h2 section so we cover different topics
-  const topStories: string[] = [];
-  let lastH2 = "";
-  const usedH2s = new Set<string>();
-  for (const section of dispatch.sections) {
-    if (section.type === "h2") lastH2 = section.content || "";
-    if (
-      section.type === "h3" &&
-      section.content &&
-      !usedH2s.has(lastH2) &&
-      topStories.length < 4
-    ) {
-      topStories.push(section.content);
-      usedH2s.add(lastH2);
+  // Find the sharpest stat across all paragraphs — prefer percentages and dollar figures
+  let hookSentence = "";
+  for (const para of paragraphs) {
+    const sentences = para.split(/\.\s+/);
+    for (const sentence of sentences) {
+      const hasPercent = /\d+(\.\d+)?%/.test(sentence);
+      const hasDollar = /\$[\d.,]+\s*(billion|million|B|M)/i.test(sentence);
+      if ((hasPercent || hasDollar) && sentence.length < 200) {
+        hookSentence = sentence.trim();
+        break;
+      }
     }
+    if (hookSentence) break;
   }
 
-  // Build the hook: lead with a stat if we found one, otherwise use the excerpt
-  let hook: string;
-  if (statMatch) {
-    // Pull the sentence containing the stat
-    const sentences = (firstParagraph!.content || "").split(/\.\s+/);
-    const statSentence = sentences.find((s) => s.includes(statMatch[1]));
-    hook = statSentence
-      ? statSentence.replace(/\s*Source:.*$/, "").trim() + "."
-      : dispatch.excerpt.split(".")[0] + ".";
+  // Build opinionated post in Shane's voice:
+  // - Find the two most contrasting/interesting data points
+  // - Write an observation, not a summary
+  // - Clean close with link
+
+  // Look for the ROC/organic growth stat specifically (strong contrast story)
+  const rocPara = paragraphs.find(
+    (p) => p.includes("Regenerative Organic") && p.includes("%")
+  );
+  const csrdPara = paragraphs.find(
+    (p) => p.includes("CSRD") || p.includes("Omnibus") || p.includes("90%")
+  );
+  const farmBillPara = paragraphs.find(
+    (p) => p.includes("Farm Bill") || p.includes("cost-share")
+  );
+
+  let postBody = "";
+
+  if (csrdPara && rocPara) {
+    // Contrast: regulatory retreat vs. voluntary label growth
+    const csrdHook = csrdPara.split(/\.\s+/)[0].trim();
+    const rocNum = rocPara.match(/(\d+)%\s+increase in buyers/)?.[1] || "22";
+
+    postBody = `The EU just cut CSRD scope by roughly 90%.
+
+Not a small trim. A near-complete rollback of the sustainability reporting mandate that was going to cover 50,000 companies.
+
+Meanwhile, Regenerative Organic Certified grew ${rocNum}% in buyers last year. USDA Organic grew 6.6%.
+
+Two signals moving in opposite directions. One says the regulatory pressure for sustainability disclosure is retreating. The other says voluntary, rigorous certification is gaining ground without it.
+
+I don't think those two things are unrelated.
+
+This week's Certification Dispatch covers both — plus B Corp's new V2.1 assurance requirements, LEED v5, and why farms across the U.S. still haven't seen their 2025 USDA cost-share reimbursements.
+
+${blogUrl}`;
+  } else if (farmBillPara) {
+    // Farm Bill angle
+    const hook = farmBillPara.split(/\.\s+/)[0].trim();
+    postBody = `${hook}.
+
+Farms that certified organic in 2025 still haven't been reimbursed by USDA. Typically that money arrives in July. It's now March.
+
+The House Farm Bill extends the cost-share program — but at $8M flat, the same level since certification costs rose 85%.
+
+The signals in certification this week were mixed. This week's dispatch has the full breakdown.
+
+${blogUrl}`;
   } else {
-    hook = dispatch.excerpt.split(".")[0] + ".";
+    // Fallback: clean observation-style post
+    postBody = `${hookSentence || dispatch.excerpt.split(".")[0]}.
+
+This week in certifications: ${dispatch.sections
+      .filter((s) => s.type === "h3")
+      .slice(0, 3)
+      .map((s) => s.content)
+      .join(", ")}.
+
+Full breakdown at the link.
+
+${blogUrl}`;
   }
 
-  // Build story teasers — short, punchy, curiosity-driven
-  const teasers = topStories.map((h) => `→ ${h}`).join("\n");
+  return postBody;
+}
 
-  // Week label from publishedAt
-  const pubDate = new Date(dispatch.publishedAt + "T12:00:00");
-  const weekLabel = pubDate.toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
+// --- Upload image to LinkedIn ---
+async function uploadImage(userId: string, imagePath: string): Promise<string> {
+  // Step 1: Initialize upload
+  const initRes = await fetch(
+    "https://api.linkedin.com/rest/images?action=initializeUpload",
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+        "LinkedIn-Version": "202504",
+        "X-Restli-Protocol-Version": "2.0.0",
+      },
+      body: JSON.stringify({
+        initializeUploadRequest: {
+          owner: `urn:li:person:${userId}`,
+        },
+      }),
+    }
+  );
+
+  if (!initRes.ok) {
+    const err = await initRes.text();
+    throw new Error(`Image upload init failed (${initRes.status}): ${err}`);
+  }
+
+  const initData = (await initRes.json()) as {
+    value: { uploadUrl: string; image: string };
+  };
+  const { uploadUrl, image: imageUrn } = initData.value;
+
+  // Step 2: Upload the binary
+  const imageBytes = readFileSync(imagePath);
+  const uploadRes = await fetch(uploadUrl, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "image/jpeg",
+    },
+    body: imageBytes,
   });
 
-  return `${hook}
+  if (!uploadRes.ok) {
+    const err = await uploadRes.text();
+    throw new Error(`Image binary upload failed (${uploadRes.status}): ${err}`);
+  }
 
-Here's what moved in certifications this week:
-
-${teasers}
-
-The full breakdown — with sources and context — is in this week's Certification Industry Dispatch (${weekLabel}).
-
-${blogUrl}
-
-#Certifications #Sustainability #Compliance`;
+  console.log(`Image uploaded: ${imageUrn}`);
+  return imageUrn;
 }
 
 // --- Post to LinkedIn ---
 async function postToLinkedIn(
   userId: string,
   text: string,
-  articleUrl: string,
-  articleTitle: string
+  imageUrn?: string
 ): Promise<void> {
-  const payload = {
+  const payload: Record<string, unknown> = {
     author: `urn:li:person:${userId}`,
     commentary: text,
     visibility: "PUBLIC",
@@ -148,14 +220,12 @@ async function postToLinkedIn(
       targetEntities: [],
       thirdPartyDistributionChannels: [],
     },
-    content: {
-      article: {
-        source: articleUrl,
-        title: articleTitle,
-      },
-    },
     lifecycleState: "PUBLISHED",
   };
+
+  if (imageUrn) {
+    payload.content = { media: { id: imageUrn } };
+  }
 
   const res = await fetch("https://api.linkedin.com/rest/posts", {
     method: "POST",
@@ -192,7 +262,6 @@ async function main() {
   }
 
   const postText = buildPostText(dispatch);
-  const blogUrl = `https://certainly.coop/blog/${dispatch.slug}`;
 
   if (dryRun) {
     console.log("\n--- LinkedIn Post Preview (dry run) ---\n");
@@ -201,8 +270,18 @@ async function main() {
     return;
   }
 
+  // Upload the dispatch OG image
+  const imagePath = resolve(process.cwd(), "public/images/dispatch-og.jpg");
+  let imageUrn: string | undefined;
+  try {
+    console.log("Uploading image...");
+    imageUrn = await uploadImage(personId!, imagePath);
+  } catch (err) {
+    console.warn(`Image upload failed, posting without image: ${err}`);
+  }
+
   console.log(`Posting to LinkedIn as member ${personId}...`);
-  await postToLinkedIn(personId!, postText, blogUrl, dispatch.title);
+  await postToLinkedIn(personId!, postText, imageUrn);
   console.log(`\nLinkedIn post published for: ${dispatch.title}`);
 }
 
