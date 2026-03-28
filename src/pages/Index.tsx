@@ -1,5 +1,6 @@
 import { Header } from "@/components/Header";
 import { HeroSection } from "@/components/HeroSection";
+import { ServicesOverview } from "@/components/ServicesOverview";
 import { TestimonialsSlider } from "@/components/TestimonialsSlider";
 import { BlogSection } from "@/components/BlogSection";
 import { AboutSection } from "@/components/AboutSection";
@@ -19,6 +20,7 @@ const Index = () => {
       <WebSiteSchema />
       <Header />
       <HeroSection />
+      <ServicesOverview />
       <TestimonialsSlider />
       <BlogSection />
       <AboutSection />

@@ -56,6 +56,36 @@ export const useBlogPost = (slug: string) => {
   });
 };
 
+export const useRelatedPosts = (currentSlug: string, tags: string[] | null, limit = 3) => {
+  return useQuery({
+    queryKey: ['related-posts', currentSlug, tags],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .select('id, title, slug, excerpt, featured_image, tags, published_at, author_name')
+        .eq('status', 'published')
+        .neq('slug', currentSlug)
+        .order('published_at', { ascending: false, nullsFirst: false });
+
+      if (error) throw error;
+
+      const posts = data as Pick<BlogPost, 'id' | 'title' | 'slug' | 'excerpt' | 'featured_image' | 'tags' | 'published_at' | 'author_name'>[];
+
+      if (!tags || tags.length === 0) return posts.slice(0, limit);
+
+      // Score by number of shared tags, then sort by score desc + recency
+      const scored = posts.map((p) => {
+        const shared = (p.tags || []).filter((t) => tags.includes(t)).length;
+        return { ...p, score: shared };
+      });
+      scored.sort((a, b) => b.score - a.score || new Date(b.published_at || 0).getTime() - new Date(a.published_at || 0).getTime());
+
+      return scored.slice(0, limit);
+    },
+    enabled: !!currentSlug,
+  });
+};
+
 export const useCreateBlogPost = () => {
   const queryClient = useQueryClient();
   

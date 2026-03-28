@@ -188,6 +188,38 @@
   margin: 0 !important;
 }
 
+/* ── Isometric animations ── */
+@keyframes iso-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes iso-dash {
+  to { stroke-dashoffset: -14; }
+}
+
+@keyframes iso-pulse {
+  0%, 100% { opacity: 0.2; r: 2.5; }
+  50% { opacity: 0.55; r: 3.5; }
+}
+
+.iso-layer {
+  animation: iso-float 5s ease-in-out infinite;
+}
+.iso-layer-0 { animation-delay: 0s; }
+.iso-layer-1 { animation-delay: 0.4s; }
+.iso-layer-2 { animation-delay: 0.8s; }
+
+.iso-connector path {
+  animation: iso-dash 1.2s linear infinite;
+}
+
+.iso-node {
+  animation: iso-pulse 3s ease-in-out infinite;
+}
+.iso-node-even { animation-delay: 0s; }
+.iso-node-odd  { animation-delay: 1.5s; }
+
 /* Hide Lovable badge */
 #lovable-badge {
   display: none !important;

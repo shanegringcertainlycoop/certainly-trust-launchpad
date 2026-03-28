@@ -1,5 +1,5 @@
-import { useParams } from 'react-router-dom';
-import { useBlogPost } from '@/hooks/useBlogPosts';
+import { useParams, Link } from 'react-router-dom';
+import { useBlogPost, useRelatedPosts } from '@/hooks/useBlogPosts';
 import { format } from 'date-fns';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
@@ -10,6 +10,7 @@ import { getDispatchImage, isDispatch } from '@/lib/dispatch-images';
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const { data: post, isLoading } = useBlogPost(slug || '');
+  const { data: relatedPosts } = useRelatedPosts(slug || '', post?.tags ?? null);
 
   if (isLoading) {
     return (
@@ -137,6 +138,43 @@ className="dispatch-content prose prose-lg max-w-2xl mx-auto
           </div>
         </div>
       </article>
+
+      {/* Related Posts */}
+      {relatedPosts && relatedPosts.length > 0 && (
+        <section className="border-t border-border bg-cream">
+          <div className="container mx-auto px-6 py-16">
+            <div className="max-w-3xl mx-auto">
+              <h2 className="text-2xl font-serif text-foreground mb-8">Keep reading</h2>
+              <div className="grid gap-6 sm:grid-cols-3">
+                {relatedPosts.map((rp) => (
+                  <Link
+                    key={rp.slug}
+                    to={`/blog/${rp.slug}`}
+                    className="group block"
+                  >
+                    {(rp.featured_image || isDispatch(rp.tags)) && (
+                      <img
+                        src={rp.featured_image || getDispatchImage(rp.slug)}
+                        alt={rp.title}
+                        className="w-full h-36 object-cover rounded-lg mb-3 group-hover:opacity-90 transition-opacity"
+                        loading="lazy"
+                      />
+                    )}
+                    {rp.tags && rp.tags.length > 0 && (
+                      <span className="text-xs font-sans uppercase tracking-wider text-accent">
+                        {rp.tags[0]}
+                      </span>
+                    )}
+                    <h3 className="text-base font-serif text-foreground group-hover:text-accent transition-colors leading-snug mt-1">
+                      {rp.title}
+                    </h3>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       <Footer />
     </div>
